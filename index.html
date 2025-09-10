@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 1: ¡El Punto de Partida! - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        .content-area h2 {
+            font-size: 1.875rem;
+            font-weight: 900;
+            color: #E2E8F0;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #4A5568;
+            padding-bottom: 0.5rem;
+        }
+        .content-area h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #A0AEC0;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-area p, .content-area li {
+            line-height: 1.75;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+        .content-area blockquote {
+            border-left: 4px solid #63B3ED;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #A0AEC0;
+            font-size: 1.125rem;
+        }
+        .card {
+            background-color: #2D3748;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 1px solid #4A5568;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-400">
+
+    <!-- Header -->
+    <header class="bg-gray-800 p-4 shadow-lg sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">
+                <i class="fas fa-drafting-compass mr-2"></i>Diseño de Sistemas - IESTP CSR
+            </h1>
+            <span class="text-lg font-semibold text-blue-400">Semana 1</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-8">
+        <div class="content-area max-w-4xl mx-auto">
+            
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-black text-white mb-2">¡El Punto de Partida!</h1>
+                <p class="text-2xl text-blue-400">Introducción y Fundamentos del Diseño de Sistemas</p>
+            </div>
+
+            <div class="card mb-8">
+                <p class="text-xl">
+                ¡Bienvenido(a), futuro arquitecto(a) digital! Esta semana sentamos las bases de nuestro viaje. Descubriremos qué es realmente un sistema, por qué un buen diseño es la diferencia entre el éxito y el fracaso, y cuál es el rol crucial que jugarás en la creación de tecnología.
+                </p>
+            </div>
+
+            <h2><i class="fas fa-sitemap mr-3"></i>¿Qué es un Sistema de Información?</h2>
+            <p>
+                Lejos de ser solo una app, un sistema de información es un ecosistema. Es la orquesta completa, no solo un instrumento. Se compone de 5 elementos que deben funcionar en perfecta armonía:
+            </p>
+            <div class="grid md:grid-cols-2 gap-6 my-6">
+                <div class="card"><h3 class="mt-0 text-white"><i class="fas fa-users mr-2"></i>Personas</h3><p>Los protagonistas. Son la razón de ser de cualquier sistema.</p></div>
+                <div class="card"><h3 class="mt-0 text-white"><i class="fas fa-laptop mr-2"></i>Hardware</h3><p>El escenario físico donde ocurre la magia: servidores, móviles, etc.</p></div>
+                <div class="card"><h3 class="mt-0 text-white"><i class="fas fa-code mr-2"></i>Software</h3><p>El guion. Las instrucciones que le dan vida al hardware.</p></div>
+                <div class="card"><h3 class="mt-0 text-white"><i class="fas fa-database mr-2"></i>Datos</h3><p>La materia prima. La información que fluye por el sistema.</p></div>
+                <div class="card"><h3 class="mt-0 text-white"><i class="fas fa-project-diagram mr-2"></i>Procesos</h3><p>La coreografía. Los pasos lógicos que sigue el sistema para operar.</p></div>
+            </div>
+            
+            <blockquote>
+                Piensa en Yape. Las **personas** somos nosotros. El **hardware** es nuestro celular. El **software** es la app. Los **datos** son nuestros contactos y saldos. El **proceso** es la secuencia de pasos para enviar dinero. ¡Todo es un sistema!
+            </blockquote>
+
+            <h2><i class="fas fa-road mr-3"></i>El Ciclo de Vida del Software (SDLC)</h2>
+            <p>
+                Este es el mapa de ruta que todo proyecto de software sigue, desde la chispa de una idea hasta un producto maduro. Tu rol como diseñador es fundamental en las primeras y más críticas etapas.
+            </p>
+            <img src="https://i.imgur.com/8y5f5A7.png" alt="Diagrama del Ciclo de Vida del Desarrollo de Software (SDLC)" class="rounded-lg my-6 shadow-xl">
+
+            <h2><i class="fas fa-user-tie mr-3"></i>Tu Rol: El Arquitecto Digital</h2>
+            <p>
+                Tu misión es ser el puente, el traductor experto entre el mundo del negocio y el mundo tecnológico. Debes entender profundamente el problema que el cliente quiere resolver y traducirlo en un plano técnico tan perfecto que los desarrolladores puedan construir la solución sin dudar.
+            </p>
+            
+            <div class="card bg-blue-900/50 my-8 border-blue-400">
+                <h2 class="border-blue-400 mt-0"><i class="fas fa-lightbulb mr-3"></i>Nuestro Proyecto: "YachayConnect"</h2>
+                <p>
+                    A lo largo del semestre, diseñaremos una plataforma web real: **YachayConnect**. Su objetivo es simple pero poderoso: conectar el talento de los estudiantes del IESTP "Carlos Salazar Romero" con las oportunidades de prácticas en las empresas de nuestra región.
+                </p>
+                <p class="font-bold text-white">
+                    ¡Seremos los arquitectos del puente que impulsará la carrera de nuestros compañeros!
+                </p>
+            </div>
+
+            <h2><i class="fas fa-tasks mr-3"></i>Actividad de Aprendizaje N°01</h2>
+            <h3>El Elevator Pitch de YachayConnect</h3>
+            <p>
+                En equipos, deberán definir la visión y propuesta de valor de nuestro proyecto. La meta es crear un discurso tan claro y potente que puedan "vender" la idea en lo que dura un viaje de ascensor.
+            </p>
+            <p class="p-4 bg-gray-800 rounded-lg">
+                Deberán entregar un documento respondiendo a 4 preguntas clave: el Pitch, el Problema Principal, la Propuesta de Valor y la Métrica de Éxito. ¡Manos a la obra!
+            </p>
+
+            <!-- Navegación Inferior -->
+            <div class="mt-12 flex justify-between border-t border-gray-700 pt-6">
+                <button id="prev-button" class="bg-gray-700 text-gray-500 font-bold py-2 px-4 rounded cursor-not-allowed" disabled>
+                    &larr; Anterior
+                </button>
+                <button id="next-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300" onclick="alert('Próximamente: Contenido de la Semana 2.')">
+                    Siguiente &rarr;
+                </button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
