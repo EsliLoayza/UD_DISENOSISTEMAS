@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 16: La Gran Final - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto:wght@400&display=swap');
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            scroll-behavior: smooth;
+            color: #e0e7ff;
+            background-color: #100f22;
+            overflow-x: hidden;
+        }
+        .stage-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #100f22, #29204f);
+        }
+        .spotlight {
+            position: fixed;
+            top: -10%; left: 50%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: spotlight-move 15s infinite alternate ease-in-out;
+            z-index: -1;
+        }
+        @keyframes spotlight-move {
+            0% { transform: translate(-80%, -20%) rotate(-15deg); }
+            100% { transform: translate(20%, 20%) rotate(15deg); }
+        }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; font-weight: 700; }
+        .text-glow-showtime {
+            animation: text-glow-showtime-animation 3s infinite alternate;
+        }
+        @keyframes text-glow-showtime-animation {
+            from { text-shadow: 0 0 10px #fde047, 0 0 20px #fde047, 0 0 30px #fde047; color: #fef9c3; }
+            to { text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff; color: #ffffff; }
+        }
+        .final-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .act-header {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .act-header:hover {
+            background-color: rgba(124, 58, 237, 0.3);
+        }
+        .act-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .confetti-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="stage-bg"></div>
+    <div class="spotlight"></div>
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+    
+    <header class="p-4 sticky top-0 z-20" style="background: rgba(16, 15, 34, 0.8); backdrop-filter: blur(10px);">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl text-white"><i class="fas fa-star mr-2 text-glow-showtime"></i>Diseño de Sistemas</h1>
+            <span class="text-lg text-glow-showtime">Semana 16</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-8 relative z-10">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl text-white mb-4">LA GRAN FINAL</h1>
+            <h1 class="text-4xl md:text-6xl text-glow-showtime">PRESENTANDO TU OBRA MAESTRA</h1>
+            <p class="text-xl text-indigo-200 mt-4">Todo el semestre te ha preparado para este momento. ¡Es hora de brillar!</p>
+        </div>
+
+        <h2 class="text-center text-white mt-24">El Guion de tu Historia</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Una gran presentación cuenta una historia. La tuya tiene 4 actos. Haz clic en cada acto para revelar los puntos clave que debes cubrir para cautivar a tu audiencia.</p>
+
+        <div class="final-panel p-8 max-w-4xl mx-auto space-y-4">
+            <!-- Acto 1 -->
+            <div class="act-container">
+                <div class="act-header flex justify-between items-center p-4 bg-purple-900 bg-opacity-30 rounded-lg">
+                    <h3 class="text-2xl text-yellow-300">Acto 1: El Problema y la Promesa</h3>
+                    <i class="fas fa-chevron-down transition-transform"></i>
+                </div>
+                <div class="act-content p-4">
+                    <ul class="list-disc list-inside space-y-2 text-lg">
+                        <li>**El Gancho:** ¿Por qué existe YachayConnect?</li>
+                        <li>**Los Protagonistas:** Presenta tus User Personas.</li>
+                        <li>**La Trama:** Muestra las Historias de Usuario clave.</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Acto 2 -->
+             <div class="act-container">
+                <div class="act-header flex justify-between items-center p-4 bg-purple-900 bg-opacity-30 rounded-lg">
+                    <h3 class="text-2xl text-yellow-300">Acto 2: El Plan de Acción</h3>
+                    <i class="fas fa-chevron-down transition-transform"></i>
+                </div>
+                <div class="act-content p-4">
+                    <ul class="list-disc list-inside space-y-2 text-lg">
+                        <li>**La Estrategia:** ¿Por qué eligieron Metodología Ágil?</li>
+                        <li>**El Mapa:** Muestra tu Product Backlog y prioridades.</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Acto 3 -->
+             <div class="act-container">
+                <div class="act-header flex justify-between items-center p-4 bg-purple-900 bg-opacity-30 rounded-lg">
+                    <h3 class="text-2xl text-yellow-300">Acto 3: El Diseño Técnico</h3>
+                    <i class="fas fa-chevron-down transition-transform"></i>
+                </div>
+                <div class="act-content p-4">
+                    <ul class="list-disc list-inside space-y-2 text-lg">
+                        <li>**La Visión General:** Diagrama de Casos de Uso.</li>
+                        <li>**El Esqueleto:** Diagrama de Clases.</li>
+                        <li>**La Coreografía:** Diagrama de Secuencia de un flujo clave.</li>
+                        <li>**La Fachada:** Prototipo interactivo de Figma.</li>
+                        <li>**El Plan Maestro:** Arquitectura y diseño de API.</li>
+                        <li>**La Fundación:** Diseño de la Base de Datos.</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Acto 4 -->
+             <div class="act-container">
+                <div class="act-header flex justify-between items-center p-4 bg-purple-900 bg-opacity-30 rounded-lg">
+                    <h3 class="text-2xl text-yellow-300">Acto 4: La Garantía de Calidad</h3>
+                    <i class="fas fa-chevron-down transition-transform"></i>
+                </div>
+                <div class="act-content p-4">
+                    <ul class="list-disc list-inside space-y-2 text-lg">
+                        <li>**El Plan:** Resumen del Plan de Pruebas.</li>
+                        <li>**La Evidencia:** Ejemplo de Caso de Prueba y Reporte de Bug.</li>
+                        <li>**El Hogar:** Enlace al repositorio de GitHub.</li>
+                        <li>**La Conclusión:** Resumen y próximos pasos.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="final-panel p-8 mt-24">
+            <h2 class="text-center text-white mt-0">Actividad de Aprendizaje N°16</h2>
+            <h3 class="text-center text-glow-showtime text-3xl mt-0">¡Luces, Cámara, Acción!</h3>
+            <p class="text-center text-lg max-w-3xl mx-auto">
+                Es su momento de tomar el escenario. Utilicen el guion, preparen sus diapositivas y cuenten la historia de su proyecto con la pasión y el profesionalismo que han demostrado todo el semestre. ¡Mucha suerte, equipo!
+            </p>
+        </div>
+
+        <!-- Navegación Inferior -->
+        <div class="mt-24 flex justify-between border-t border-yellow-300 border-opacity-30 pt-8">
+            <a href="sesion15.html" class="final-panel px-6 py-3 text-lg font-bold">
+                &larr; Semana 15
+            </a>
+            <div id="end-course-btn" class="final-panel px-6 py-3 text-lg font-bold cursor-pointer">
+                <i class="fas fa-trophy mr-2"></i> Fin del Curso
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Accordion for Acts
+        document.querySelectorAll('.act-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('i');
+                const isOpen = content.style.maxHeight;
+
+                document.querySelectorAll('.act-content').forEach(c => c.style.maxHeight = null);
+                document.querySelectorAll('.act-header i').forEach(i => i.style.transform = 'rotate(0deg)');
+
+                if (!isOpen) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Confetti effect
+        const confettiCanvas = document.getElementById('confetti-canvas');
+        const confettiCtx = confettiCanvas.getContext('2d');
+        let confettiPieces = [];
+        const numConfetti = 200;
+        const colors = ['#fde047', '#f9a8d4', '#a78bfa', '#7dd3fc', '#6ee7b7'];
+
+        function resizeCanvas() {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        }
+
+        function createConfetti() {
+            for(let i=0; i<numConfetti; i++) {
+                confettiPieces.push({
+                    x: Math.random() * confettiCanvas.width,
+                    y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+                    r: Math.random() * 5 + 2,
+                    d: Math.random() * numConfetti,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    tilt: Math.floor(Math.random() * 10) - 10
+                });
+            }
+        }
+
+        let angle = 0;
+        function drawConfetti() {
+            confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            for(let i=0; i<confettiPieces.length; i++) {
+                let piece = confettiPieces[i];
+                confettiCtx.beginPath();
+                confettiCtx.lineWidth = piece.r / 2;
+                confettiCtx.strokeStyle = piece.color;
+                confettiCtx.moveTo(piece.x + piece.tilt, piece.y);
+                confettiCtx.lineTo(piece.x, piece.y + piece.tilt + piece.r / 2);
+                confettiCtx.stroke();
+            }
+            angle += 0.01;
+            updateConfetti();
+        }
+
+        function updateConfetti() {
+            for(let i=0; i<confettiPieces.length; i++) {
+                let piece = confettiPieces[i];
+                piece.tilt += 0.1;
+                piece.y += (Math.cos(angle + piece.d) + 1 + piece.r / 2) / 2;
+                
+                if (piece.y > confettiCanvas.height) {
+                    confettiPieces[i] = { ...piece, x: Math.random() * confettiCanvas.width, y: -20 };
+                }
+            }
+        }
+
+        document.getElementById('end-course-btn').addEventListener('click', () => {
+             resizeCanvas();
+             createConfetti();
+             let confettiInterval = setInterval(drawConfetti, 20);
+             setTimeout(() => clearInterval(confettiInterval), 5000); // Stop after 5 seconds
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 11: ¿Dónde Vivirán los Datos? - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&display=swap');
+        body { 
+            font-family: 'Exo 2', sans-serif; 
+            scroll-behavior: smooth;
+            color: #f0f0f0;
+            overflow-x: hidden;
+            background-color: #000;
+        }
+        .aurora-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(125deg, #ff0055, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #8a2be2, #ff0055);
+            background-size: 1000% 1000%;
+            animation: aurora-gradient 60s ease infinite;
+        }
+        @keyframes aurora-gradient {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        .glass-aurora-card {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(255, 0, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .glass-aurora-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 40px 0 rgba(0, 255, 255, 0.3);
+        }
+        h1, h2, h3 { font-weight: 900; letter-spacing: -0.05em; }
+        .text-rainbow-glow {
+            animation: rainbow-text 5s linear infinite;
+        }
+        @keyframes rainbow-text {
+            0% { color: #ff0055; text-shadow: 0 0 10px #ff0055; }
+            16% { color: #ff9900; text-shadow: 0 0 10px #ff9900; }
+            33% { color: #ffff00; text-shadow: 0 0 10px #ffff00; }
+            50% { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
+            66% { color: #00ffff; text-shadow: 0 0 10px #00ffff; }
+            83% { color: #8a2be2; text-shadow: 0 0 10px #8a2be2; }
+            100% { color: #ff0055; text-shadow: 0 0 10px #ff0055; }
+        }
+
+        /* Normalizer 3000 styles */
+        .portal {
+            border: 3px solid;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        .portal::before {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            background: #000;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        .portal span {
+            font-size: 2.5rem;
+            font-weight: 900;
+            transition: all 0.4s ease;
+        }
+        .portal:hover {
+            transform: scale(1.1) rotate(360deg);
+        }
+        .portal:hover span {
+            transform: rotate(-360deg);
+        }
+        .portal.nf1 { border-color: #ff0055; } .portal.nf1 span { color: #ff0055; }
+        .portal.nf2 { border-color: #ffff00; } .portal.nf2 span { color: #ffff00; }
+        .portal.nf3 { border-color: #00ff00; } .portal.nf3 span { color: #00ff00; }
+        .db-table {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            transition: opacity 0.5s ease;
+        }
+        .db-table th { background: rgba(255, 255, 255, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="aurora-bg"></div>
+    <header class="p-4 sticky top-0 z-20" style="background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white"><i class="fas fa-database mr-2 text-rainbow-glow"></i>Diseño de Sistemas - IESTP CSR</h1>
+            <span class="text-lg font-bold text-rainbow-glow">Semana 11</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-8 relative z-10">
+        <div class="text-center mb-16">
+            <h1 class="text-6xl md:text-8xl font-black text-white mb-4">¿DÓNDE VIVIRÁN</h1>
+            <h1 class="text-6xl md:text-8xl font-black text-rainbow-glow">LOS DATOS?</h1>
+            <p class="text-2xl text-gray-200 mt-4">Diseñando la Fundación Lógica de la Base de Datos</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="glass-aurora-card p-8">
+                <div class="text-center"><i class="fas fa-key text-6xl text-yellow-400"></i></div>
+                <h3 class="text-3xl text-center text-yellow-400 mt-4">Claves del Reino: PK y FK</h3>
+                <p class="mt-4 text-lg">La **Clave Primaria (PK)** es el DNI único de cada fila. La **Clave Foránea (FK)** es el "DNI de otra tabla" que actúa como el pegamento mágico para conectar y relacionar toda nuestra información.</p>
+            </div>
+            <div class="glass-aurora-card p-8">
+                <div class="text-center"><i class="fas fa-magic-wand-sparkles text-6xl text-cyan-400"></i></div>
+                <h3 class="text-3xl text-center text-cyan-400 mt-4">Normalización: La Limpieza</h3>
+                <p class="mt-4 text-lg">Es un proceso de "purificación" para organizar nuestras tablas. Elimina la redundancia y previene errores, asegurando que cada dato viva en un único y feliz lugar.</p>
+            </div>
+        </div>
+
+        <h2 class="text-center text-white mt-24">El Normalizador 3000</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Observa cómo una tabla caótica se transforma al pasar por los portales de la Normalización. ¡Haz clic en cada portal para aplicar las reglas y ver la magia!</p>
+
+        <div id="normalizer-container" class="space-y-8">
+            <!-- Initial State -->
+            <div id="state-0" class="text-center">
+                <h3 class="text-2xl text-red-500 font-bold mb-4">ESTADO 0: ¡CAOS DE DATOS! (Tabla Sin Normalizar)</h3>
+                <div class="db-table p-4 inline-block">
+                    <table class="w-full text-left">
+                        <thead><tr><th class="p-2">PedidoID</th><th class="p-2">Cliente</th><th class="p-2">Cliente_Direccion</th><th class="p-2">Productos (ID, Nombre, Cantidad)</th></tr></thead>
+                        <tbody><tr><td class="p-2">101</td><td class="p-2">Juan Pérez</td><td class="p-2">Av. Sol 123</td><td class="p-2">(P01, Laptop, 1), (P05, Mouse, 1)</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Portals -->
+            <div class="flex justify-around items-center my-8">
+                <div id="portal-1nf" class="portal nf1 flex items-center justify-center"><span>1NF</span></div>
+                <div id="portal-2nf" class="portal nf2 flex items-center justify-center"><span>2NF</span></div>
+                <div id="portal-3nf" class="portal nf3 flex items-center justify-center"><span>3NF</span></div>
+            </div>
+
+            <!-- Normalized States (hidden by default) -->
+            <div id="state-1" class="hidden text-center">
+                 <h3 class="text-2xl text-orange-500 font-bold mb-4">ESTADO 1: ¡ATOMICIDAD! (1ra Forma Normal)</h3>
+                 <p class="mb-4">Se eliminaron los grupos repetitivos. Cada producto ahora tiene su propia fila.</p>
+                <div class="db-table p-4 inline-block">
+                    <table class="w-full text-left">
+                         <thead><tr><th class="p-2">PedidoID</th><th class="p-2">Cliente</th><th class="p-2">Cliente_Direccion</th><th class="p-2">ProductoID</th><th class="p-2">Producto_Nombre</th><th class="p-2">Cantidad</th></tr></thead>
+                        <tbody>
+                            <tr><td class="p-2">101</td><td class="p-2">Juan Pérez</td><td class="p-2">Av. Sol 123</td><td class="p-2">P01</td><td class="p-2">Laptop</td><td class="p-2">1</td></tr>
+                             <tr><td class="p-2">101</td><td class="p-2">Juan Pérez</td><td class="p-2">Av. Sol 123</td><td class="p-2">P05</td><td class="p-2">Mouse</td><td class="p-2">1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="state-2" class="hidden text-center">
+                 <h3 class="text-2xl text-yellow-400 font-bold mb-4">ESTADO 2: ¡SIN DEPENDENCIAS PARCIALES! (2da Forma Normal)</h3>
+                 <p class="mb-4">Se separaron los datos. Ahora tenemos una tabla para Pedidos y otra para los Detalles del Pedido.</p>
+                <div class="flex flex-wrap justify-center gap-8">
+                    <div class="db-table p-4">
+                        <h4 class="font-bold text-center">Pedidos</h4>
+                        <table><thead><tr><th class="p-2">PedidoID (PK)</th><th class="p-2">Cliente</th><th class="p-2">Cliente_Direccion</th></tr></thead>
+                        <tbody><tr><td class="p-2">101</td><td class="p-2">Juan Pérez</td><td class="p-2">Av. Sol 123</td></tr></tbody></table>
+                    </div>
+                     <div class="db-table p-4">
+                        <h4 class="font-bold text-center">Detalle_Pedido</h4>
+                        <table><thead><tr><th class="p-2">PedidoID (FK)</th><th class="p-2">ProductoID (FK)</th><th class="p-2">Cantidad</th></tr></thead>
+                        <tbody><tr><td class="p-2">101</td><td class="p-2">P01</td><td class="p-2">1</td></tr>
+                        <tr><td class="p-2">101</td><td class="p-2">P05</td><td class="p-2">1</td></tr></tbody></table>
+                    </div>
+                </div>
+            </div>
+            
+             <div id="state-3" class="hidden text-center">
+                 <h3 class="text-2xl text-green-400 font-bold mb-4">ESTADO 3: ¡PUREZA DE DATOS! (3ra Forma Normal)</h3>
+                 <p class="mb-4">¡Perfección! Se eliminaron las dependencias transitivas. Cada dato está en su lugar lógico.</p>
+                <div class="flex flex-wrap justify-center gap-8">
+                    <div class="db-table p-4">
+                        <h4 class="font-bold text-center">Clientes</h4>
+                        <table><thead><tr><th class="p-2">ClienteID (PK)</th><th class="p-2">Nombre</th><th class="p-2">Direccion</th></tr></thead>
+                        <tbody><tr><td class="p-2">C01</td><td class="p-2">Juan Pérez</td><td class="p-2">Av. Sol 123</td></tr></tbody></table>
+                    </div>
+                    <div class="db-table p-4">
+                        <h4 class="font-bold text-center">Pedidos</h4>
+                        <table><thead><tr><th class="p-2">PedidoID (PK)</th><th class="p-2">ClienteID (FK)</th></tr></thead>
+                        <tbody><tr><td class="p-2">101</td><td class="p-2">C01</td></tr></tbody></table>
+                    </div>
+                    <div class="db-table p-4">
+                        <h4 class="font-bold text-center">Detalle_Pedido</h4>
+                        <table><thead><tr><th class="p-2">PedidoID (FK)</th><th class="p-2">ProductoID (FK)</th><th class="p-2">Cantidad</th></tr></thead>
+                        <tbody><tr><td class="p-2">101</td><td class="p-2">P01</td><td class="p-2">1</td></tr>
+                        <tr><td class="p-2">101</td><td class="p-2">P05</td><td class="p-2">1</td></tr></tbody></table>
+                    </div>
+                     <div class="db-table p-4">
+                        <h4 class="font-bold text-center">Productos</h4>
+                        <table><thead><tr><th class="p-2">ProductoID (PK)</th><th class="p-2">Nombre</th></tr></thead>
+                        <tbody><tr><td class="p-2">P01</td><td class="p-2">Laptop</td></tr>
+                        <tr><td class="p-2">P05</td><td class="p-2">Mouse</td></tr></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-aurora-card p-8 mt-24">
+            <h2 class="text-center text-white mt-0">Actividad de Aprendizaje N°11</h2>
+            <h3 class="text-center text-rainbow-glow text-3xl mt-0">Construyendo la Fundación de YachayConnect</h3>
+            <p class="text-center text-lg max-w-3xl mx-auto">
+                Es tu momento de ser ingeniero de datos. Ve a **dbdiagram.io**, traduce tu Diagrama de Clases a un esquema de base de datos y aplícale el proceso de Normalización para asegurar una fundación de datos robusta y profesional.
+            </p>
+             <div class="text-center mt-8">
+                 <a href="https://dbdiagram.io/home" target="_blank" class="inline-block text-white font-bold py-4 px-8 rounded-lg transition duration-300 text-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+                    <i class="fas fa-drafting-compass mr-2"></i>Ir a dbdiagram.io
+                </a>
+            </div>
+        </div>
+
+        <!-- Navegación Inferior -->
+        <div class="mt-24 flex justify-between border-t border-white border-opacity-20 pt-8">
+            <a href="sesion10.html" class="glass-aurora-card px-6 py-3 text-lg font-bold hover:border-pink-500">
+                &larr; Semana 10
+            </a>
+            <a href="sesion12.html" class="glass-aurora-card px-6 py-3 text-lg font-bold hover:border-cyan-400">
+                Semana 12 &rarr;
+            </a>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('portal-1nf').addEventListener('click', () => {
+            document.getElementById('state-0').classList.add('hidden');
+            document.getElementById('state-1').classList.remove('hidden');
+            document.getElementById('state-2').classList.add('hidden');
+            document.getElementById('state-3').classList.add('hidden');
+        });
+        document.getElementById('portal-2nf').addEventListener('click', () => {
+             document.getElementById('state-0').classList.add('hidden');
+            document.getElementById('state-1').classList.add('hidden');
+            document.getElementById('state-2').classList.remove('hidden');
+            document.getElementById('state-3').classList.add('hidden');
+        });
+        document.getElementById('portal-3nf').addEventListener('click', () => {
+             document.getElementById('state-0').classList.add('hidden');
+            document.getElementById('state-1').classList.add('hidden');
+            document.getElementById('state-2').classList.add('hidden');
+            document.getElementById('state-3').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

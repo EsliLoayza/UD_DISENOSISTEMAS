@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 6: El Mapa del Sistema - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        h2 {
+            font-size: 1.875rem; font-weight: 900; color: #E2E8F0; margin-top: 2rem; margin-bottom: 1rem;
+            border-bottom: 3px solid #4A5568; padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.5rem; font-weight: 700; color: #A0AEC0; margin-top: 1.5rem; margin-bottom: 0.75rem;
+        }
+        p, li {
+            line-height: 1.75; margin-bottom: 1rem; font-size: 1.125rem;
+        }
+        .card {
+            background-color: #2D3748; border-radius: 0.75rem; padding: 1.5rem; border: 1px solid #4A5568;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+        .tooltip {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+          border-bottom: 1px dotted #63B3ED;
+        }
+        .tooltip .tooltiptext {
+          visibility: hidden; width: 250px; background-color: #1A202C; color: #fff; text-align: center;
+          border-radius: 6px; padding: 8px; position: absolute; z-index: 10; bottom: 125%; left: 50%;
+          margin-left: -125px; opacity: 0; transition: opacity 0.3s; font-size: 0.875rem; line-height: 1.5;
+        }
+        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+        
+        /* Estilos para el diagrama SVG interactivo */
+        .svg-diagram {
+            background-color: #1A202C;
+            border-radius: 0.75rem;
+            border: 1px solid #4A5568;
+        }
+        .svg-diagram .system-rect {
+            fill: none;
+            stroke: #4A5568;
+            stroke-width: 2;
+        }
+        .svg-diagram .system-text {
+            fill: #A0AEC0;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .svg-diagram .actor-group .actor-icon {
+            fill: #48BB78;
+            transition: fill 0.3s;
+        }
+        .svg-diagram .actor-group .actor-text {
+            fill: #E2E8F0;
+            font-size: 14px;
+            text-anchor: middle;
+        }
+        .svg-diagram .use-case-group .use-case-ellipse {
+            fill: #2B6CB0;
+            stroke: #63B3ED;
+            stroke-width: 1;
+            transition: fill 0.3s;
+        }
+         .svg-diagram .use-case-group .use-case-text {
+            fill: #FFFFFF;
+            font-size: 12px;
+            text-anchor: middle;
+        }
+        .svg-diagram .connector {
+            stroke: #A0AEC0;
+            stroke-width: 1.5;
+        }
+        .svg-diagram .relation {
+            stroke: #A0AEC0;
+            stroke-width: 1.5;
+            stroke-dasharray: 5, 5;
+            marker-end: url(#arrowhead);
+        }
+        .svg-diagram .relation-text {
+            fill: #A0AEC0;
+            font-size: 11px;
+            text-anchor: middle;
+        }
+
+        /* Interactivity */
+        .svg-diagram g.interactive:hover {
+            cursor: pointer;
+        }
+        .svg-diagram g.interactive:hover .actor-icon {
+            fill: #81E6D9;
+        }
+        .svg-diagram g.interactive:hover .use-case-ellipse {
+            fill: #4299E1;
+        }
+
+        /* Animation */
+        .svg-diagram .anim-fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-400">
+
+    <!-- Header -->
+    <header class="bg-gray-800 p-4 shadow-lg sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white"><i class="fas fa-drafting-compass mr-2"></i>Diseño de Sistemas - IESTP CSR</h1>
+            <span class="text-lg font-semibold text-blue-400">Semana 6</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-8">
+        <div class="content-area max-w-5xl mx-auto">
+            
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-black text-white mb-2">El Mapa del Sistema</h1>
+                <p class="text-2xl text-blue-400">Creando el primer plano con Diagramas de Casos de Uso</p>
+            </div>
+
+            <div class="card mb-8 text-center">
+                 <i class="fas fa-map-marked-alt text-4xl text-blue-400 mb-4"></i>
+                <p class="text-xl">
+                Dejamos la lista de requerimientos para convertirnos en arquitectos. Hoy aprenderemos a usar **UML** para dibujar el plano más importante: el **Diagrama de Casos de Uso**. Este mapa nos dará una vista de pájaro de todo nuestro sistema.
+                </p>
+            </div>
+
+            <h2><i class="fas fa-puzzle-piece mr-3"></i>Los 3 Componentes Fundamentales</h2>
+            <p>Un Diagrama de Casos de Uso es sorprendentemente simple. Se construye con solo tres tipos de piezas. ¡Vamos a conocerlas!</p>
+            <div class="grid md:grid-cols-3 gap-6 my-6">
+                <div class="card text-center">
+                    <i class="fas fa-user-ninja text-5xl text-green-400 mb-4"></i>
+                    <h3 class="mt-0 text-white">Actor</h3>
+                    <p>Un **rol** que interactúa con el sistema. Puede ser una persona u otro sistema. Siempre está <span class="tooltip font-bold text-green-400">FUERA<span class="tooltiptext">¡Esta es la regla de oro! Los actores nunca van dentro del rectángulo del sistema. Son entidades externas.</span></span>.</p>
+                </div>
+                <div class="card text-center">
+                    <i class="fas fa-box-open text-5xl text-yellow-400 mb-4"></i>
+                    <h3 class="mt-0 text-white">Sistema</h3>
+                    <p>Un **rectángulo** que define las fronteras de nuestro software. Todo lo que está <span class="tooltip font-bold text-yellow-400">DENTRO<span class="tooltiptext">Si está dentro del rectángulo, es nuestra responsabilidad diseñarlo y construirlo.</span></span> es parte del proyecto.</p>
+                </div>
+                <div class="card text-center">
+                    <i class="fas fa-cogs text-5xl text-blue-400 mb-4"></i>
+                    <h3 class="mt-0 text-white">Caso de Uso</h3>
+                    <p>Un **óvalo** que representa una funcionalidad principal que el sistema ofrece a un actor. Su nombre siempre es <span class="tooltip font-bold text-blue-400">Verbo+Objeto<span class="tooltiptext">Ejemplos: 'Registrar Usuario', 'Calcular Impuesto', 'Generar Reporte'. Describe una acción con un objetivo.</span></span>.</p>
+                </div>
+            </div>
+
+            <h2><i class="fas fa-project-diagram mr-3"></i>Construyendo el Diagrama: Paso a Paso</h2>
+            <p>Veamos cómo estas piezas encajan para formar el mapa de YachayConnect. Presiona el botón para construir el diagrama interactivo.</p>
+            <div id="diagram-wrapper" class="my-6">
+                <!-- SVG Diagram will be injected here -->
+            </div>
+            <div class="text-center mt-4">
+                <button id="build-diagram-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    <i class="fas fa-play mr-2"></i>Construir Diagrama Interactivo
+                </button>
+            </div>
+
+            <h2><i class="fas fa-link mr-3"></i>Añadiendo Detalle: Relaciones Clave</h2>
+            <p>A veces, las funcionalidades dependen unas de otras. Usamos flechas punteadas para mostrar estas conexiones.</p>
+            <div class="grid md:grid-cols-2 gap-6 my-6">
+                 <div class="card border-l-4 border-purple-400">
+                    <h3 class="mt-0 text-purple-400">Inclusión `<<include>>`</h3>
+                    <p>**Funcionalidad OBLIGATORIA.** Para `Postular a Oferta`, es obligatorio `Iniciar Sesión`.</p>
+                    <p class="font-mono text-sm text-purple-300">[Postular a Oferta] ---> [Iniciar Sesión]</p>
+                </div>
+                 <div class="card border-l-4 border-teal-400">
+                    <h3 class="mt-0 text-teal-400">Extensión `<<extend>>`</h3>
+                    <p>**Funcionalidad OPCIONAL.** Al `Gestionar Perfil`, opcionalmente puedes `Subir Video de Presentación`.</p>
+                    <p class="font-mono text-sm text-teal-300">[Subir Video] ---> [Gestionar Perfil]</p>
+                </div>
+            </div>
+
+            <h2><i class="fas fa-tasks mr-3"></i>Actividad de Aprendizaje N°06</h2>
+            <h3>Creando el Mapa de YachayConnect</h3>
+            <p>
+                ¡Tu turno de ser el arquitecto! Usando la herramienta online **diagrams.net** y tu Product Backlog, crearás el Diagrama de Casos de Uso para YachayConnect. Define tus actores, tus funcionalidades principales y cómo se conectan.
+            </p>
+            <div class="p-6 bg-gray-800 rounded-lg text-center">
+                <p class="text-lg">Este será su primer gran plano técnico, el documento que definirá el alcance de todo su proyecto de forma clara y visual.</p>
+                 <a href="https://app.diagrams.net/" target="_blank" class="mt-4 inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 text-lg">
+                    <i class="fas fa-pen-ruler mr-2"></i>Abrir diagrams.net
+                </a>
+            </div>
+
+            <!-- Navegación Inferior -->
+            <div class="mt-12 flex justify-between border-t border-gray-700 pt-6">
+                <a href="sesion5.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    &larr; Semana 5
+                </a>
+                <a href="sesion7.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Semana 7 &rarr;
+                </a>
+            </div>
+        </div>
+    </main>
+    <script>
+    const buildDiagramBtn = document.getElementById('build-diagram-btn');
+    const diagramWrapper = document.getElementById('diagram-wrapper');
+
+    buildDiagramBtn.addEventListener('click', function() {
+        diagramWrapper.innerHTML = ''; // Limpiar si se presiona de nuevo
+        
+        const svgCode = `
+            <svg viewBox="0 0 800 450" class="svg-diagram">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#A0AEC0" />
+                    </marker>
+                </defs>
+
+                <!-- Elementos del Diagrama -->
+                <rect class="system-rect anim-fade-in" x="150" y="20" width="500" height="410" rx="15" style="animation-delay: 0s;"></rect>
+                <text class="system-text anim-fade-in" x="160" y="45" style="animation-delay: 0s;">Sistema YachayConnect</text>
+                
+                <!-- Actores -->
+                <g id="actor-estudiante" class="interactive anim-fade-in" style="animation-delay: 0.5s;" onclick="showTooltip('actor-estudiante', 'Estudiante', 'Rol que representa a los alumnos que buscan prácticas.')">
+                    <circle class="actor-icon" cx="75" cy="45" r="15"></circle>
+                    <line class="actor-icon" x1="75" y1="60" x2="75" y2="100" stroke-width="4"></line>
+                    <line class="actor-icon" x1="55" y1="75" x2="95" y2="75" stroke-width="4"></line>
+                    <line class="actor-icon" x1="75" y1="100" x2="55" y2="130" stroke-width="4"></line>
+                    <line class="actor-icon" x1="75" y1="100" x2="95" y2="130" stroke-width="4"></line>
+                    <text class="actor-text" x="75" y="150">Estudiante</text>
+                </g>
+                <g id="actor-empresa" class="interactive anim-fade-in" style="animation-delay: 1s;" onclick="showTooltip('actor-empresa', 'Empresa', 'Rol que representa a los reclutadores que publican ofertas.')">
+                    <circle class="actor-icon" cx="725" cy="45" r="15"></circle>
+                    <line class="actor-icon" x1="725" y1="60" x2="725" y2="100" stroke-width="4"></line>
+                    <line class="actor-icon" x1="705" y1="75" x2="745" y2="75" stroke-width="4"></line>
+                    <line class="actor-icon" x1="725" y1="100" x2="705" y2="130" stroke-width="4"></line>
+                    <line class="actor-icon" x1="725" y1="100" x2="745" y2="130" stroke-width="4"></line>
+                    <text class="actor-text" x="725" y="150">Empresa</text>
+                </g>
+
+                <!-- Casos de Uso -->
+                <g id="uc-buscar" class="interactive anim-fade-in" style="animation-delay: 1.5s;" onclick="showTooltip('uc-buscar', 'Buscar Ofertas', 'Permite al estudiante filtrar y ver las prácticas disponibles.')">
+                    <ellipse class="use-case-ellipse" cx="300" cy="100" rx="70" ry="25"></ellipse>
+                    <text class="use-case-text" x="300" y="105">Buscar Ofertas</text>
+                </g>
+                <g id="uc-postular" class="interactive anim-fade-in" style="animation-delay: 2s;" onclick="showTooltip('uc-postular', 'Postular a Oferta', 'Permite al estudiante enviar su perfil a una oferta de interés.')">
+                    <ellipse class="use-case-ellipse" cx="300" cy="180" rx="70" ry="25"></ellipse>
+                    <text class="use-case-text" x="300" y="185">Postular a Oferta</text>
+                </g>
+                 <g id="uc-publicar" class="interactive anim-fade-in" style="animation-delay: 2.5s;" onclick="showTooltip('uc-publicar', 'Publicar Oferta', 'Permite a la empresa crear un nuevo anuncio de prácticas.')">
+                    <ellipse class="use-case-ellipse" cx="500" cy="100" rx="70" ry="25"></ellipse>
+                    <text class="use-case-text" x="500" y="105">Publicar Oferta</text>
+                </g>
+                <g id="uc-ver" class="interactive anim-fade-in" style="animation-delay: 3s;" onclick="showTooltip('uc-ver', 'Ver Postulantes', 'Permite a la empresa revisar los perfiles de los estudiantes que postularon.')">
+                    <ellipse class="use-case-ellipse" cx="500" cy="180" rx="70" ry="25"></ellipse>
+                    <text class="use-case-text" x="500" y="185">Ver Postulantes</text>
+                </g>
+                <g id="uc-login" class="interactive anim-fade-in" style="animation-delay: 3.5s;" onclick="showTooltip('uc-login', 'Iniciar Sesión', 'Funcionalidad común y obligatoria para acceder a acciones protegidas.')">
+                    <ellipse class="use-case-ellipse" cx="400" cy="350" rx="70" ry="25"></ellipse>
+                    <text class="use-case-text" x="400" y="355">Iniciar Sesión</text>
+                </g>
+
+                <!-- Conectores -->
+                <line class="connector anim-fade-in" x1="125" y1="110" x2="230" y2="100" style="animation-delay: 4s;"></line>
+                <line class="connector anim-fade-in" x1="125" y1="120" x2="230" y2="180" style="animation-delay: 4.2s;"></line>
+                <line class="connector anim-fade-in" x1="675" y1="110" x2="570" y2="100" style="animation-delay: 4.4s;"></line>
+                <line class="connector anim-fade-in" x1="675" y1="120" x2="570" y2="180" style="animation-delay: 4.6s;"></line>
+
+                <!-- Relaciones -->
+                <line class="relation anim-fade-in" x1="315" y1="205" x2="375" y2="325" style="animation-delay: 5s;"></line>
+                <text class="relation-text anim-fade-in" x="370" y="260" style="animation-delay: 5.2s;">&lt;&lt;include&gt;&gt;</text>
+                
+                <line class="relation anim-fade-in" x1="485" y1="205" x2="425" y2="325" style="animation-delay: 5.4s;"></line>
+                <text class="relation-text anim-fade-in" x="435" y="260" style="animation-delay: 5.6s;">&lt;&lt;include&gt;&gt;</text>
+                
+                <g id="tooltip-container" visibility="hidden">
+                    <rect x="0" y="0" width="220" height="60" rx="5" fill="#1A202C" stroke="#63B3ED" stroke-width="1"></rect>
+                    <text id="tooltip-title" x="110" y="20" font-size="14" font-weight="bold" fill="#E2E8F0" text-anchor="middle"></text>
+                    <text id="tooltip-desc" fill="#A0AEC0" text-anchor="middle">
+                        <tspan id="tooltip-tspan1" x="110" y="40" font-size="12"></tspan>
+                        <tspan id="tooltip-tspan2" x="110" y="55" font-size="12"></tspan>
+                    </text>
+                </g>
+            </svg>
+        `;
+        diagramWrapper.innerHTML = svgCode;
+        this.disabled = true;
+        this.innerHTML = '<i class="fas fa-check mr-2"></i>Diagrama Construido';
+    });
+    
+    function showTooltip(elementId, title, desc) {
+        const element = document.getElementById(elementId);
+        const tooltip = document.getElementById('tooltip-container');
+        const tooltipTitle = document.getElementById('tooltip-title');
+        const tooltipTspan1 = document.getElementById('tooltip-tspan1');
+        const tooltipTspan2 = document.getElementById('tooltip-tspan2');
+
+        const bbox = element.getBBox();
+        const x = bbox.x + bbox.width / 2 - 110;
+        const y = bbox.y - 70; // 60 height + 10 margin
+        
+        tooltip.setAttribute('transform', `translate(${x}, ${y})`);
+        tooltipTitle.textContent = title;
+
+        // Simple word wrap for description
+        const words = desc.split(' ');
+        let line1 = '';
+        let line2 = '';
+        words.forEach(word => {
+            if (line1.length < 35) {
+                line1 += word + ' ';
+            } else {
+                line2 += word + ' ';
+            }
+        });
+        tooltipTspan1.textContent = line1.trim();
+        tooltipTspan2.textContent = line2.trim();
+
+        tooltip.setAttribute('visibility', 'visible');
+        
+        // Hide tooltip on mouseout of the general SVG area
+        const svg = document.querySelector('.svg-diagram');
+        svg.onmouseleave = () => {
+            tooltip.setAttribute('visibility', 'hidden');
+        };
+    }
+    </script>
+</body>
+</html>

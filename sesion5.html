@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 5: Construyendo el Backlog - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        h2 {
+            font-size: 1.875rem; font-weight: 900; color: #E2E8F0; margin-top: 2rem; margin-bottom: 1rem;
+            border-bottom: 3px solid #4A5568; padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.5rem; font-weight: 700; color: #A0AEC0; margin-top: 1.5rem; margin-bottom: 0.75rem;
+        }
+        p, li {
+            line-height: 1.75; margin-bottom: 1rem; font-size: 1.125rem;
+        }
+        .card {
+            background-color: #2D3748; border-radius: 0.75rem; padding: 1.5rem; border: 1px solid #4A5568;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+        .deep-card {
+            position: relative; overflow: hidden;
+        }
+        .deep-card .letter {
+            font-size: 4rem; font-weight: 900; color: rgba(255, 255, 255, 0.1); position: absolute; bottom: -10px; right: 10px; transition: color 0.3s;
+        }
+        .deep-card:hover .letter { color: rgba(255, 255, 255, 0.2); }
+
+        .moscow-card {
+            border-left-width: 4px;
+        }
+        .moscow-must { border-color: #F56565; background: rgba(245, 101, 101, 0.1); }
+        .moscow-should { border-color: #F6E05E; background: rgba(246, 224, 94, 0.1); }
+        .moscow-could { border-color: #63B3ED; background: rgba(99, 179, 237, 0.1); }
+        .moscow-wont { border-color: #718096; background: rgba(113, 128, 150, 0.1); }
+
+        .tooltip {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+        }
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 220px;
+          background-color: #1A202C;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 8px;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          margin-left: -110px;
+          opacity: 0;
+          transition: opacity 0.3s;
+          font-size: 0.875rem;
+          line-height: 1.5;
+        }
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-400">
+
+    <!-- Header -->
+    <header class="bg-gray-800 p-4 shadow-lg sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white"><i class="fas fa-drafting-compass mr-2"></i>Diseño de Sistemas - IESTP CSR</h1>
+            <span class="text-lg font-semibold text-blue-400">Semana 5</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-8">
+        <div class="content-area max-w-5xl mx-auto">
+            
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-black text-white mb-2 animate-pulse">Construyendo el Product Backlog</h1>
+                <p class="text-2xl text-blue-400">De la Lista de Deseos al Plan Maestro</p>
+            </div>
+
+            <div class="card mb-8 text-center">
+                 <i class="fas fa-list-check text-4xl text-blue-400 mb-4"></i>
+                <p class="text-xl">
+                Hemos recopilado las "órdenes" de nuestros usuarios. Ahora, como Product Owners, nos toca organizar la cocina. Transformaremos esa lista de ideas en un **Product Backlog**, la única fuente de verdad que guiará todo nuestro proyecto.
+                </p>
+            </div>
+
+            <h2><i class="fas fa-layer-group mr-3"></i>El Backlog es... DEEP</h2>
+            <p>Un buen Product Backlog no es una simple lista. Es un artefacto vivo que debe ser **DEEP**. Pasa el cursor sobre cada tarjeta para descubrir qué significa.</p>
+            <div class="grid md:grid-cols-2 gap-6 my-6">
+                <div class="card deep-card">
+                    <h3 class="mt-0 text-white">Detallado apropiadamente</h3>
+                    <p>Las tareas urgentes están súper detalladas. Las futuras son solo ideas generales.</p>
+                    <div class="letter">D</div>
+                </div>
+                <div class="card deep-card">
+                    <h3 class="mt-0 text-white">Emergente</h3>
+                    <p>Nunca está completo. Crece y cambia a medida que aprendemos más del proyecto y del mercado.</p>
+                    <div class="letter">E</div>
+                </div>
+                <div class="card deep-card">
+                    <h3 class="mt-0 text-white">Estimado</h3>
+                    <p>Cada tarea tiene una estimación de esfuerzo. Sabemos si algo es pequeño, mediano o grande.</p>
+                    <div class="letter">E</div>
+                </div>
+                <div class="card deep-card">
+                    <h3 class="mt-0 text-white">Priorizado</h3>
+                    <p>Lo más valioso siempre está arriba. El equipo sabe exactamente en qué trabajar a continuación.</p>
+                    <div class="letter">P</div>
+                </div>
+            </div>
+
+            <h2><i class="fas fa-balance-scale-right mr-3"></i>El Arte de Priorizar: MoSCoW</h2>
+            <p>¿Cómo decidimos qué va primero? Usamos MoSCoW para clasificar cada Historia de Usuario. Esta técnica nos obliga a ser honestos sobre lo que es verdaderamente esencial.</p>
+            
+            <div class="space-y-4 my-6">
+                <div class="moscow-card moscow-must p-6 rounded-lg">
+                    <h3 class="mt-0 text-red-400 flex items-center"><i class="fas fa-exclamation-circle mr-3 text-2xl"></i>MUST HAVE (Debe Tener)</h3>
+                    <p>**NO NEGOCIABLE.** Sin esto, el producto no funciona o no tiene sentido. Es la base de nuestro <span class="tooltip font-bold text-white">Producto Mínimo Viable (MVP)<span class="tooltiptext">El MVP es la versión más simple de un producto que se puede lanzar al mercado para obtener feedback de usuarios reales.</span></span>.</p>
+                </div>
+                <div class="moscow-card moscow-should p-6 rounded-lg">
+                    <h3 class="mt-0 text-yellow-400 flex items-center"><i class="fas fa-check-double mr-3 text-2xl"></i>SHOULD HAVE (Debería Tener)</h3>
+                    <p>Importante, pero no vital para el lanzamiento. El producto funciona sin esto, pero la experiencia es incompleta.</p>
+                </div>
+                <div class="moscow-card moscow-could p-6 rounded-lg">
+                    <h3 class="mt-0 text-blue-400 flex items-center"><i class="fas fa-magic mr-3 text-2xl"></i>COULD HAVE (Podría Tener)</h3>
+                    <p>Deseable, un "nice-to-have". Se hará solo si sobra tiempo y recursos, como mejoras estéticas o funciones secundarias.</p>
+                </div>
+                <div class="moscow-card moscow-wont p-6 rounded-lg">
+                    <h3 class="mt-0 text-gray-500 flex items-center"><i class="fas fa-ban mr-3 text-2xl"></i>WON'T HAVE (No Tendrá... por ahora)</h3>
+                    <p>Lo que explícitamente decidimos NO hacer en esta versión. Ayuda a mantener el enfoque y gestionar expectativas.</p>
+                </div>
+            </div>
+
+             <div class="card bg-blue-900/50 my-12 border-blue-400 text-center">
+                <h2 class="border-blue-400 mt-0"><i class="fab fa-trello mr-3"></i>Nuestra Herramienta: Trello</h2>
+                <p class="text-xl">
+                    Usaremos Trello para dar vida a nuestro backlog. Es un tablero digital donde cada historia es una tarjeta que podemos mover y organizar visualmente.
+                </p>
+                <img src="https://i.imgur.com/7b2a6tN.gif" alt="Animación de un tablero Trello" class="rounded-lg my-4 shadow-xl w-full max-w-md mx-auto">
+            </div>
+
+            <h2><i class="fas fa-tasks mr-3"></i>Actividad de Aprendizaje N°05 (HITO 1)</h2>
+            <h3>Creación del Product Backlog en Trello</h3>
+            <p>
+                ¡Es el momento de la verdad! En equipos, crearán su primer Product Backlog en Trello. Convertirán sus Historias de Usuario en tarjetas, las detallarán y, lo más importante, las priorizarán usando la técnica MoSCoW.
+            </p>
+            <div class="p-6 bg-gray-800 rounded-lg text-center">
+                <p class="text-lg">Este es su primer gran entregable. Al final de esta sesión, tendrán un plan de acción claro y profesional que guiará el resto del diseño del proyecto.</p>
+                <a href="https://trello.com/es" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 text-lg">
+                    <i class="fab fa-trello mr-2"></i>Ir a Trello y Empezar
+                </a>
+            </div>
+
+            <!-- Navegación Inferior -->
+                        <div class="mt-12 flex justify-between border-t border-gray-700 pt-6">
+                <a href="sesion4.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    &larr; Semana 4
+                </a>
+                <a href="sesion6.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Semana 6 &rarr;
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

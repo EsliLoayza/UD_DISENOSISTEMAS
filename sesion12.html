@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 12: Hito 2 - Sustentación Técnica - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@400;700&display=swap');
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            scroll-behavior: smooth;
+            color: #f0f0f0;
+            overflow-x: hidden;
+            background-color: #05000a;
+        }
+        .aurora-bg-2 {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(125deg, #ff3366, #ff9933, #f0e641, #33ff99, #33ccff, #9933ff, #ff3366);
+            background-size: 800% 800%;
+            animation: aurora-gradient-fast 40s ease infinite;
+        }
+        @keyframes aurora-gradient-fast {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        .holo-card {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .holo-card:before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(transparent, rgba(0, 255, 255, 0.2), transparent 30%);
+            animation: rotate 6s linear infinite;
+        }
+        .holo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+        }
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; font-weight: 900; }
+        .text-rainbow-fast {
+            background-image: linear-gradient(90deg, #ff3366, #ff9933, #f0e641, #33ff99, #33ccff, #9933ff, #ff3366);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: text-shine 4s linear infinite;
+        }
+        @keyframes text-shine {
+            to { background-position: 200% center; }
+        }
+        .checklist-item {
+            background: rgba(0,0,0,0.3);
+            border-left: 4px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        .checklist-item.completed {
+            border-left-color: #33ff99;
+            text-decoration: line-through;
+            color: #888;
+        }
+        .checklist-item.completed .icon {
+            color: #33ff99;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-bg-2"></div>
+    <header class="p-4 sticky top-0 z-20" style="background: rgba(5, 0, 10, 0.7); backdrop-filter: blur(10px);">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl text-white"><i class="fas fa-project-diagram mr-2 text-rainbow-fast"></i>Diseño de Sistemas</h1>
+            <span class="text-lg text-rainbow-fast">Semana 12</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-8 relative z-10">
+        <div class="text-center mb-16">
+            <h1 class="text-6xl md:text-8xl text-white mb-4">HITO 2</h1>
+            <h1 class="text-5xl md:text-7xl text-rainbow-fast">SUSTENTACIÓN TÉCNICA</h1>
+            <p class="text-2xl text-gray-200 mt-4 font-sans">Es hora de conectar los puntos y contar la historia de tu diseño.</p>
+        </div>
+
+        <h2 class="text-center text-white mt-24">Checklist de Preparación</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Antes de construir tu presentación, asegúrate de tener todos tus artefactos listos. ¡Haz clic en cada ítem para marcarlo como completado!</p>
+        
+        <div id="checklist" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div class="checklist-item p-4 rounded-lg cursor-pointer flex items-center gap-4">
+                <i class="fas fa-users text-3xl icon"></i> <span class="text-lg font-semibold flex-1">Diagrama de Casos de Uso</span>
+            </div>
+            <div class="checklist-item p-4 rounded-lg cursor-pointer flex items-center gap-4">
+                <i class="fas fa-sitemap text-3xl icon"></i> <span class="text-lg font-semibold flex-1">Diagrama de Clases</span>
+            </div>
+            <div class="checklist-item p-4 rounded-lg cursor-pointer flex items-center gap-4">
+                <i class="fas fa-tasks text-3xl icon"></i> <span class="text-lg font-semibold flex-1">Diagrama de Secuencia</span>
+            </div>
+            <div class="checklist-item p-4 rounded-lg cursor-pointer flex items-center gap-4">
+                <i class="fas fa-drafting-compass text-3xl icon"></i> <span class="text-lg font-semibold flex-1">Wireframe (UI/UX)</span>
+            </div>
+            <div class="checklist-item p-4 rounded-lg cursor-pointer flex items-center gap-4">
+                <i class="fas fa-network-wired text-3xl icon"></i> <span class="text-lg font-semibold flex-1">Arquitectura y API</span>
+            </div>
+            <div class="checklist-item p-4 rounded-lg cursor-pointer flex items-center gap-4">
+                <i class="fas fa-database text-3xl icon"></i> <span class="text-lg font-semibold flex-1">Diseño de Base de Datos</span>
+            </div>
+        </div>
+
+        <h2 class="text-center text-white mt-24">La Estructura de tu Historia</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Tu presentación es una narrativa. Guía a tu audiencia a través de este viaje, desde la visión general hasta la fundación más profunda.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="holo-card p-6 text-center">
+                <div class="text-5xl font-bold text-rainbow-fast mb-2">1</div>
+                <h3 class="text-2xl text-white">La Visión</h3>
+                <p>Casos de Uso</p>
+            </div>
+            <div class="holo-card p-6 text-center">
+                <div class="text-5xl font-bold text-rainbow-fast mb-2">2</div>
+                <h3 class="text-2xl text-white">El Esqueleto</h3>
+                <p>Diagrama de Clases</p>
+            </div>
+            <div class="holo-card p-6 text-center">
+                <div class="text-5xl font-bold text-rainbow-fast mb-2">3</div>
+                <h3 class="text-2xl text-white">La Lógica</h3>
+                <p>Diagrama de Secuencia</p>
+            </div>
+            <div class="holo-card p-6 text-center">
+                <div class="text-5xl font-bold text-rainbow-fast mb-2">4</div>
+                <h3 class="text-2xl text-white">La Experiencia</h3>
+                <p>Wireframe UI/UX</p>
+            </div>
+             <div class="holo-card p-6 text-center">
+                <div class="text-5xl font-bold text-rainbow-fast mb-2">5</div>
+                <h3 class="text-2xl text-white">El Plan Maestro</h3>
+                <p>Arquitectura & API</p>
+            </div>
+             <div class="holo-card p-6 text-center">
+                <div class="text-5xl font-bold text-rainbow-fast mb-2">6</div>
+                <h3 class="text-2xl text-white">La Fundación</h3>
+                <p>Diseño de Base de Datos</p>
+            </div>
+             <div class="holo-card p-6 text-center col-span-1 md:col-span-2 lg:col-span-2">
+                <div class="text-5xl font-bold text-rainbow-fast mb-2">7</div>
+                <h3 class="text-2xl text-white">La Conclusión</h3>
+                <p>Cierre y Próximos Pasos</p>
+            </div>
+        </div>
+
+        <div class="holo-card p-8 mt-24">
+            <h2 class="text-center text-white mt-0">Actividad de Aprendizaje N°12</h2>
+            <h3 class="text-center text-rainbow-fast text-3xl mt-0">¡A Escena!</h3>
+            <p class="text-center text-lg max-w-3xl mx-auto">
+                Es tu momento. Utiliza la estructura y los consejos para construir una presentación impactante. Ensambla tus artefactos, cuenta la historia de tu diseño y demuestra el profesionalismo de tu equipo. ¡El escenario es tuyo!
+            </p>
+             <div class="text-center mt-8">
+                 <a href="https://www.canva.com/presentations" target="_blank" class="inline-block text-white font-bold py-4 px-8 rounded-lg transition duration-300 text-xl bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600">
+                    <i class="fas fa-chalkboard-teacher mr-2"></i>Crear Presentación
+                </a>
+            </div>
+        </div>
+
+        <!-- Navegación Inferior -->
+        <div class="mt-24 flex justify-between border-t border-white border-opacity-20 pt-8">
+            <a href="sesion11.html" class="holo-card px-6 py-3 text-lg font-bold">
+                <div class="relative z-10">&larr; Semana 11</div>
+            </a>
+            <a href="sesion13.html" class="holo-card px-6 py-3 text-lg font-bold">
+                <div class="relative z-10">Semana 13 &rarr;</div>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        document.querySelectorAll('.checklist-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('completed');
+            });
+        });
+    </script>
+</body>
+</html>

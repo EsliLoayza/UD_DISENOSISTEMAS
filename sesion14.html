@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 14: Diseño de Casos de Prueba - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@900&display=swap');
+        body { 
+            font-family: 'Share Tech Mono', monospace; 
+            scroll-behavior: smooth;
+            color: #93c5fd;
+            background-color: #01000a;
+            overflow-x: hidden;
+        }
+        .matrix-bg-2 {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: #01000a;
+        }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; font-weight: 900; }
+        .text-glow-electric {
+            animation: text-glow-electric-animation 3s infinite alternate;
+        }
+        @keyframes text-glow-electric-animation {
+            0% { text-shadow: 0 0 5px #00ffc3, 0 0 10px #00ffc3, 0 0 15px #00ffc3; color: #d1fff3; }
+            100% { text-shadow: 0 0 5px #a959ff, 0 0 10px #a959ff, 0 0 15px #a959ff; color: #e4d1ff; }
+        }
+        .terminal-card {
+            background: rgba(10, 5, 25, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.4), inset 0 0 5px rgba(59, 130, 246, 0.5);
+        }
+        .case-field {
+            border-left: 3px solid #3b82f6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .case-field:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-left-color: #00ffc3;
+        }
+        .field-explanation {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s;
+            opacity: 0;
+            padding: 0 1rem;
+        }
+        .case-field.active + .field-explanation {
+            max-height: 200px;
+            opacity: 1;
+            padding: 1rem;
+        }
+
+        /* Postman Animation */
+        #postman-sim {
+            --req-color: #ff9900;
+            --res-color: #00cc66;
+        }
+        .dot {
+            width: 15px; height: 15px; border-radius: 50%;
+            position: absolute; top: 50%; left: 25%;
+            transform: translateY(-50%);
+            opacity: 0;
+        }
+        @keyframes travel {
+            0% { left: 25%; opacity: 1; }
+            100% { left: 75%; opacity: 1; transform: translateY(-50%) scale(1.5); }
+        }
+        .status-code {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="matrix-bg-2" class="matrix-bg-2"></div>
+    <header class="p-4 sticky top-0 z-20" style="background: rgba(1, 0, 10, 0.8); backdrop-filter: blur(10px);">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl text-white"><i class="fas fa-tasks mr-2 text-glow-electric"></i>Diseño de Sistemas</h1>
+            <span class="text-lg text-glow-electric">Semana 14</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-8 relative z-10">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl text-white mb-4">LA RECETA DE CALIDAD</h1>
+            <h1 class="text-4xl md:text-6xl text-glow-electric">DISEÑO DE CASOS DE PRUEBA</h1>
+            <p class="text-xl text-blue-300 mt-4">De la estrategia a la táctica. Precisión en cada paso.</p>
+        </div>
+
+        <h2 class="text-center text-white mt-24">Anatomía de un Caso de Prueba</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Un caso de prueba es un contrato de calidad. Cada sección es vital para garantizar pruebas consistentes y efectivas. Haz clic en cada campo para revelar su propósito y secretos.</p>
+
+        <div id="case-designer" class="terminal-card p-6 max-w-4xl mx-auto">
+            <div class="case-field p-2 pl-4">
+                <strong class="text-cyan-400">ID:</strong> YC-LOGIN-001
+            </div>
+            <div class="field-explanation bg-blue-900 bg-opacity-30 rounded-b-md">
+                <p><strong>Propósito:</strong> Un identificador único y trazable. La primera parte (YC) es el proyecto, la segunda (LOGIN) es el módulo, y la tercera es un número secuencial.</p>
+            </div>
+            
+            <div class="case-field p-2 pl-4 mt-2">
+                <strong class="text-cyan-400">Título:</strong> Login exitoso con credenciales válidas
+            </div>
+             <div class="field-explanation bg-blue-900 bg-opacity-30 rounded-b-md">
+                <p><strong>Propósito:</strong> Describe el objetivo de la prueba de forma corta y concisa. Cualquiera debería entender qué se está probando con solo leer el título.</p>
+            </div>
+
+            <div class="case-field p-2 pl-4 mt-2">
+                <strong class="text-cyan-400">Precondiciones:</strong> El usuario debe existir en la BD y estar activo.
+            </div>
+             <div class="field-explanation bg-blue-900 bg-opacity-30 rounded-b-md">
+                <p><strong>Propósito:</strong> Define el estado del sistema necesario ANTES de empezar la prueba. Ahorra tiempo y evita falsos negativos.</p>
+            </div>
+            
+            <div class="case-field p-2 pl-4 mt-2">
+                <strong class="text-cyan-400">Pasos:</strong><br>1. Navegar a /login<br>2. Ingresar email válido...
+            </div>
+             <div class="field-explanation bg-blue-900 bg-opacity-30 rounded-b-md">
+                <p><strong>Propósito:</strong> La "receta". Una lista numerada de acciones claras, simples y directas. Deben ser tan específicas que no dejen lugar a la interpretación.</p>
+            </div>
+
+            <div class="case-field p-2 pl-4 mt-2">
+                <strong class="text-cyan-400">Resultado Esperado:</strong> El sistema redirige al /dashboard y muestra "Bienvenido".
+            </div>
+             <div class="field-explanation bg-blue-900 bg-opacity-30 rounded-b-md">
+                <p><strong>Propósito:</strong> La clave de todo. Describe de forma medible y observable qué debe pasar si la prueba es exitosa. Es la definición de "correcto".</p>
+            </div>
+        </div>
+
+        <h2 class="text-center text-white mt-24">Simulador de API: Hablando con el Cerebro</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-lg">No solo probamos la cara de la app (UI), sino su cerebro (API). Postman nos deja hablarle directamente. Haz clic en "Enviar Petición" para simular un ciclo de prueba de API.</p>
+
+        <div id="postman-sim" class="terminal-card p-6 max-w-4xl mx-auto">
+            <div class="bg-gray-800 p-2 rounded-t-md flex items-center gap-2">
+                <span class="bg-green-500 text-green-500 font-bold px-3 py-1 rounded">GET</span>
+                <span class="text-gray-400 flex-1">https://api.yachayconnect.pe/v1/ofertas</span>
+                <button id="send-request-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded transition-colors">Enviar Petición</button>
+            </div>
+            <div class="bg-black p-4 rounded-b-md h-64 relative">
+                <div class="flex justify-between items-center h-full">
+                    <div class="text-center w-1/4">
+                        <i class="fas fa-desktop text-5xl text-blue-400"></i><p>Cliente (Postman)</p>
+                    </div>
+                    <div class="flex-1 border-t-2 border-dashed border-gray-600 relative">
+                         <div id="request-dot" class="dot bg-orange-400"></div>
+                         <div id="response-dot" class="dot bg-green-400"></div>
+                    </div>
+                    <div class="text-center w-1/4">
+                         <i class="fas fa-server text-5xl text-purple-400"></i><p>Servidor (API)</p>
+                    </div>
+                </div>
+                 <div id="response-code" class="absolute top-4 right-4 text-2xl font-bold"></div>
+            </div>
+        </div>
+
+        <div class="terminal-card p-8 mt-24">
+            <h2 class="text-center text-white mt-0">Actividad de Aprendizaje N°14</h2>
+            <h3 class="text-center text-glow-electric text-3xl mt-0">Escribiendo las Recetas de Calidad</h3>
+            <p class="text-center text-lg max-w-3xl mx-auto">
+                Ahora es tu turno. Toma la plantilla y diseña 3 casos de prueba para YachayConnect. Sé preciso, sé detallado, y piensa tanto en el camino feliz como en los posibles errores. ¡A cazar!
+            </p>
+        </div>
+
+        <!-- Navegación Inferior -->
+        <div class="mt-24 flex justify-between border-t border-blue-500 border-opacity-30 pt-8">
+            <a href="sesion13.html" class="terminal-card px-6 py-3 text-lg font-bold">
+                &larr; Semana 13
+            </a>
+            <a href="sesion15.html" class="terminal-card px-6 py-3 text-lg font-bold">
+                Semana 15 &rarr;
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // Matrix BG Effect
+        const canvas = document.getElementById('matrix-bg-2');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = '01';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        for (let x = 0; x < columns; x++) drops[x] = 1;
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(1, 0, 10, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            const hue = Date.now() / 30 % 360;
+            ctx.fillStyle = `hsl(${hue}, 90%, 60%)`;
+            ctx.font = fontSize + 'px Share Tech Mono';
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+        
+        // Interactive Case Designer
+        document.querySelectorAll('.case-field').forEach(field => {
+            field.addEventListener('click', (e) => {
+                const wasActive = field.classList.contains('active');
+                document.querySelectorAll('.case-field').forEach(f => f.classList.remove('active'));
+                if (!wasActive) {
+                    field.classList.add('active');
+                }
+            });
+        });
+
+        // Postman Simulation
+        const sendBtn = document.getElementById('send-request-btn');
+        const reqDot = document.getElementById('request-dot');
+        const resDot = document.getElementById('response-dot');
+        const resCode = document.getElementById('response-code');
+        
+        sendBtn.addEventListener('click', () => {
+            sendBtn.disabled = true;
+            sendBtn.innerText = 'Enviando...';
+            resCode.style.opacity = '0';
+            
+            reqDot.style.animation = 'travel 1.5s ease-out forwards';
+            
+            setTimeout(() => {
+                reqDot.style.animation = '';
+                reqDot.style.opacity = '0';
+
+                resDot.style.animation = 'travel 1.5s ease-out reverse forwards';
+                 setTimeout(() => {
+                    resDot.style.animation = '';
+                    resDot.style.opacity = '0';
+                    sendBtn.disabled = false;
+                    sendBtn.innerText = 'Enviar Petición';
+                    resCode.innerHTML = '<span class="text-green-400">200 OK</span>';
+                    resCode.style.opacity = '1';
+                    resCode.style.transform = 'scale(1)';
+                }, 1500);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

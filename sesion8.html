@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 8: Poniendo el Sistema en Movimiento - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        h2 {
+            font-size: 1.875rem; font-weight: 900; color: #E2E8F0; margin-top: 2rem; margin-bottom: 1rem;
+            border-bottom: 3px solid #4A5568; padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.5rem; font-weight: 700; color: #A0AEC0; margin-top: 1.5rem; margin-bottom: 0.75rem;
+        }
+        p, li {
+            line-height: 1.75; margin-bottom: 1rem; font-size: 1.125rem;
+        }
+        .card {
+            background-color: #2D3748; border-radius: 0.75rem; padding: 1.5rem; border: 1px solid #4A5568;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Estilos para el diagrama SVG interactivo */
+        .svg-diagram {
+            background-color: #1A202C;
+            border-radius: 0.75rem;
+            border: 1px solid #4A5568;
+            user-select: none;
+        }
+        .lifeline-rect { fill: #2D3748; stroke: #4A5568; stroke-width: 1.5; }
+        .lifeline-text { font-weight: bold; fill: #E2E8F0; font-size: 14px; text-anchor: middle; }
+        .lifeline-line { stroke: #4A5568; stroke-width: 2; stroke-dasharray: 5, 5; }
+        .activation-bar { fill: #63B3ED; stroke: #90CDF4; stroke-width: 1; }
+        .message-line { stroke: #A0AEC0; stroke-width: 1.5; }
+        .message-text { fill: #CBD5E0; font-size: 12px; }
+        .fragment-rect { fill: rgba(74, 85, 104, 0.2); stroke: #A0AEC0; stroke-width: 1.5; stroke-dasharray: 10, 5; }
+        .fragment-label { font-weight: bold; font-size: 12px; fill: #E2E8F0; }
+
+        /* Animation */
+        .anim-step { opacity: 0; transition: opacity 0.5s ease; }
+        .anim-step.visible { opacity: 1; }
+
+        /* Modal for details */
+        #modal { transition: opacity 0.3s ease; }
+        #modal-content { transition: transform 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-400">
+
+    <!-- Header -->
+    <header class="bg-gray-800 p-4 shadow-lg sticky top-0 z-20">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white"><i class="fas fa-drafting-compass mr-2"></i>Diseño de Sistemas - IESTP CSR</h1>
+            <span class="text-lg font-semibold text-blue-400">Semana 8</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-8">
+        <div class="content-area max-w-5xl mx-auto">
+            
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-black text-white mb-2">Poniendo el Sistema en Movimiento</h1>
+                <p class="text-2xl text-blue-400">Coreografiando la Interacción con Diagramas de Secuencia</p>
+            </div>
+
+            <div class="card mb-8 text-center">
+                 <i class="fas fa-film text-4xl text-blue-400 mb-4"></i>
+                <p class="text-xl">
+                Si el Diagrama de Clases fue el "reparto de actores", el **Diagrama de Secuencia** es el **guion técnico** para una escena específica. Hoy nos convertiremos en directores para orquestar la conversación entre los objetos de nuestro sistema.
+                </p>
+            </div>
+
+            <h2><i class="fas fa-theater-masks mr-3"></i>El Escenario y el Diálogo</h2>
+            <p>Un Diagrama de Secuencia cuenta una historia en el tiempo. El tiempo fluye de arriba hacia abajo. Estos son sus componentes principales:</p>
+            <div class="grid md:grid-cols-2 gap-6 my-6">
+                <div class="card">
+                    <h3 class="mt-0 text-white"><i class="fas fa-hourglass-half mr-2"></i>Línea de Vida y Activación</h3>
+                    <p>La línea punteada vertical es la **Línea de Vida** de un objeto. El rectángulo azul sobre ella es la **Activación**, y muestra cuándo el objeto está "ocupado" trabajando.</p>
+                </div>
+                <div class="card">
+                    <h3 class="mt-0 text-white"><i class="fas fa-comments mr-2"></i>Mensajes</h3>
+                    <p>Las flechas son los **Mensajes** o llamadas a métodos. Una flecha sólida (`->`) es una llamada que espera respuesta (síncrona). Una flecha punteada (`<--`) es la respuesta.</p>
+                </div>
+            </div>
+             
+            <h2><i class="fas fa-sitemap mr-3"></i>La Coreografía de "Postular a Oferta"</h2>
+            <p>A continuación, vamos a "reproducir" la secuencia de eventos para el caso de uso "Postular a Oferta". Presiona el botón para iniciar la animación y haz clic en los mensajes para entender qué sucede en cada paso.</p>
+            <div id="diagram-wrapper" class="my-6">
+                 <svg viewBox="0 0 800 600" class="svg-diagram">
+                    <!-- Definiciones -->
+                    <defs>
+                        <marker id="arrow-sync" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#A0AEC0"></path>
+                        </marker>
+                         <marker id="arrow-reply" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 5 L 10 0 L 10 10 z" fill="#A0AEC0" stroke-width="0"></path>
+                        </marker>
+                    </defs>
+
+                    <!-- Líneas de Vida (Base) -->
+                    <g id="lifelines">
+                        <rect class="lifeline-rect" x="50" y="20" width="140" height="40" rx="5"></rect>
+                        <text class="lifeline-text" x="120" y="45">:Estudiante</text>
+                        <line class="lifeline-line" x1="120" y1="60" x2="120" y2="580"></line>
+
+                        <rect class="lifeline-rect" x="330" y="20" width="140" height="40" rx="5"></rect>
+                        <text class="lifeline-text" x="400" y="45">:Oferta</text>
+                        <line class="lifeline-line" x1="400" y1="60" x2="400" y2="580"></line>
+                        
+                        <rect class="lifeline-rect" x="610" y="20" width="140" height="40" rx="5"></rect>
+                        <text class="lifeline-text" x="680" y="45">:Postulacion</text>
+                        <line class="lifeline-line" x1="680" y1="60" x2="680" y2="580"></line>
+                    </g>
+
+                    <!-- Pasos de la Animación -->
+                    <g id="step1" class="anim-step" onclick="showModal('step1')">
+                        <line class="message-line" x1="20" y1="100" x2="110" y2="100" marker-end="url(#arrow-sync)"></line>
+                        <text class="message-text" x="30" y="95">1: hacerClickPostular()</text>
+                        <rect class="activation-bar" x="115" y="100" width="10" height="420"></rect>
+                    </g>
+                     <g id="step2" class="anim-step" onclick="showModal('step2')">
+                        <line class="message-line" x1="125" y1="140" x2="390" y2="140" marker-end="url(#arrow-sync)"></line>
+                        <text class="message-text" x="150" y="135">2: verificarDisponibilidad()</text>
+                        <rect class="activation-bar" x="395" y="140" width="10" height="60"></rect>
+                    </g>
+                    <g id="step3" class="anim-step" onclick="showModal('step3')">
+                        <line class="message-line" x1="125" y1="180" x2="390" y2="180" marker-end="url(#arrow-reply)" stroke-dasharray="5,5"></line>
+                        <text class="message-text" x="150" y="175">3: [true] disponible</text>
+                    </g>
+                    <g id="step4" class="anim-step">
+                        <rect class="fragment-rect" x="80" y="220" width="660" height="320"></rect>
+                        <text class="fragment-label" x="90" y="240">alt</text>
+                        <line class="message-line" x1="80" y1="420" x2="740" y2="420" stroke-dasharray="10,5"></line>
+                        <text class="message-text" x="90" y="270">[oferta está abierta]</text>
+                        <text class="message-text" x="90" y="440">[else]</text>
+                    </g>
+                     <g id="step5" class="anim-step" onclick="showModal('step5')">
+                        <line class="message-line" x1="125" y1="300" x2="670" y2="300" marker-end="url(#arrow-sync)" stroke-dasharray="5,5"></line>
+                        <text class="message-text" x="350" y="295">4: <<create>> nuevaPostulacion</text>
+                        <rect class="activation-bar" x="675" y="300" width="10" height="80"></rect>
+                    </g>
+                    <g id="step6" class="anim-step" onclick="showModal('step6')">
+                        <line class="message-line" x1="125" y1="360" x2="670" y2="360" marker-end="url(#arrow-reply)" stroke-dasharray="5,5"></line>
+                    </g>
+                     <g id="step7" class="anim-step" onclick="showModal('step7')">
+                        <line class="message-line" x1="125" y1="480" x2="390" y2="480" marker-end="url(#arrow-sync)"></line>
+                         <text class="message-text" x="150" y="475">5: mostrarError()</text>
+                    </g>
+                 </svg>
+            </div>
+             <div class="text-center mt-4">
+                <button id="build-diagram-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    <i class="fas fa-play mr-2"></i>Reproducir Secuencia
+                </button>
+            </div>
+            
+            <h2><i class="fas fa-tasks mr-3"></i>Actividad de Aprendizaje N°08</h2>
+            <h3>La Coreografía de YachayConnect</h3>
+            <p>
+                ¡Tu turno de ser el director! Elige un caso de uso clave de tu proyecto y, usando **diagrams.net**, crea el Diagrama de Secuencia. Modela la conversación entre los objetos, mostrando la lógica exacta de la interacción.
+            </p>
+            <div class="p-6 bg-gray-800 rounded-lg text-center">
+                <p class="text-lg">Este diagrama será la receta paso a paso que un programador seguirá para implementar la funcionalidad.</p>
+                 <a href="https://app.diagrams.net/" target="_blank" class="mt-4 inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 text-lg">
+                    <i class="fas fa-pen-ruler mr-2"></i>Abrir diagrams.net
+                </a>
+            </div>
+
+            <!-- Navegación Inferior -->
+            <div class="mt-12 flex justify-between border-t border-gray-700 pt-6">
+                <a href="sesion7.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    &larr; Semana 7
+                </a>
+                <a href="sesion9.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Semana 9 &rarr;
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-30 opacity-0 pointer-events-none">
+        <div id="modal-content" class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md border border-blue-400 transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-2xl font-bold text-white mt-0"></h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <p id="modal-body" class="text-gray-300"></p>
+        </div>
+    </div>
+
+    <script>
+    const buildDiagramBtn = document.getElementById('build-diagram-btn');
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+
+    const stepsData = {
+        'step1': { title: 'Paso 1: Inicio de la Interacción', body: 'El actor (que no se muestra en el diagrama, pero inicia todo) hace clic en "Postular". Esto activa al objeto Estudiante para que comience a trabajar.' },
+        'step2': { title: 'Paso 2: Verificación Previa', body: 'Antes de hacer nada, el objeto Estudiante le pregunta al objeto Oferta si todavía está disponible. Esta es una llamada síncrona, debe esperar la respuesta.' },
+        'step3': { title: 'Paso 3: Respuesta de la Oferta', body: 'La Oferta responde. Asumimos el camino feliz: la oferta está abierta y responde "true".' },
+        'step5': { title: 'Paso 4: Creación del Objeto', body: 'Como la oferta está disponible, el Estudiante ordena la creación de un nuevo objeto de la clase Postulacion. Este es un mensaje especial <<create>>.' },
+        'step6': { title: 'Paso 5: Confirmación', body: 'El objeto Postulacion, una vez creado y guardado, devuelve el control al Estudiante, confirmando que la operación fue exitosa.' },
+        'step7': { title: 'Paso Alternativo', body: 'Si en el paso 3 la Oferta hubiera respondido "false", se ejecutaría esta ruta. El Estudiante llamaría a su propia función para mostrar un mensaje de error en la pantalla.' }
+    };
+
+    function showModal(id) {
+        const data = stepsData[id];
+        if (data) {
+            modalTitle.textContent = data.title;
+            modalBody.textContent = data.body;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+        }
+    }
+
+    closeModalBtn.addEventListener('click', () => {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modalContent.classList.add('scale-95');
+    });
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModalBtn.click();
+    });
+
+    buildDiagramBtn.addEventListener('click', function() {
+        const steps = document.querySelectorAll('.anim-step');
+        steps.forEach(step => step.classList.remove('visible'));
+        
+        let delay = 0;
+        steps.forEach(step => {
+            setTimeout(() => {
+                step.classList.add('visible');
+            }, delay);
+            delay += 700; // 0.7s entre cada paso
+        });
+
+        this.disabled = true;
+        this.innerHTML = '<i class="fas fa-check mr-2"></i>Secuencia Reproducida';
+    });
+    </script>
+</body>
+</html>

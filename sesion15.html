@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 15: UAT y Reporte de Bugs - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Orbitron:wght@900&display=swap');
+        body { 
+            font-family: 'Fira Code', monospace; 
+            scroll-behavior: smooth;
+            color: #a5b4fc;
+            background-color: #0c0a18;
+            overflow-x: hidden;
+        }
+        .aurora-final-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at top left, rgba(255, 0, 222, 0.4), transparent 40%),
+                        radial-gradient(circle at bottom right, rgba(0, 255, 255, 0.4), transparent 40%);
+            animation: aurora-pulse 10s infinite alternate;
+        }
+        @keyframes aurora-pulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; font-weight: 900; }
+        .text-glow-final {
+            animation: text-glow-final-animation 4s infinite alternate;
+        }
+        @keyframes text-glow-final-animation {
+            from { text-shadow: 0 0 10px #ff00de, 0 0 20px #ff00de, 0 0 30px #ff00de; }
+            to { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
+        }
+        .glass-panel {
+            background: rgba(18, 16, 38, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(129, 140, 248, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .bug-form-input {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #4f46e5;
+            color: #c7d2fe;
+        }
+        .bug-form-input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px #00ffff;
+        }
+        .git-flow-svg .flow-path {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+        }
+        .git-flow-svg .commit-circle {
+            opacity: 0;
+            transform-origin: center;
+        }
+        .git-flow-svg .text-label {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-final-bg"></div>
+    <header class="p-4 sticky top-0 z-20" style="background: rgba(12, 10, 24, 0.8); backdrop-filter: blur(10px);">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl text-white"><i class="fas fa-bug mr-2 text-glow-final"></i>Diseño de Sistemas</h1>
+            <span class="text-lg text-glow-final">Semana 15</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-8 relative z-10">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl text-white mb-4">LA INSPECCIÓN FINAL</h1>
+            <h1 class="text-4xl md:text-6xl text-glow-final">UAT Y REPORTE DE BUGS</h1>
+            <p class="text-xl text-indigo-200 mt-4">El último filtro antes de la gloria. Es hora de validar el valor.</p>
+        </div>
+
+        <h2 class="text-center text-white mt-24">Simulador de Reporte de Bugs</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Un buen reporte es un mapa claro para el desarrollador. Completa el formulario para ver cómo se estructura un reporte profesional y efectivo.</p>
+
+        <div class="glass-panel p-8 max-w-4xl mx-auto">
+            <h3 class="text-2xl text-center text-glow-final mb-6">Nuevo Reporte de Incidencia</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="bug-title" class="block mb-2 text-indigo-300">Título del Bug</label>
+                    <input type="text" id="bug-title" class="bug-form-input w-full p-2 rounded" placeholder="Ej: Error 500 al postular con perfil incompleto">
+                </div>
+                <div>
+                    <label for="bug-severity" class="block mb-2 text-indigo-300">Severidad (Impacto Técnico)</label>
+                    <select id="bug-severity" class="bug-form-input w-full p-2 rounded">
+                        <option>Baja</option>
+                        <option>Media</option>
+                        <option>Alta</option>
+                        <option>Crítica</option>
+                    </select>
+                </div>
+                 <div class="md:col-span-2">
+                    <label for="bug-steps" class="block mb-2 text-indigo-300">Pasos para Reproducir</label>
+                    <textarea id="bug-steps" rows="4" class="bug-form-input w-full p-2 rounded" placeholder="1. Iniciar sesión como...&#10;2. Navegar a...&#10;3. Hacer clic en..."></textarea>
+                </div>
+                 <div>
+                    <label for="bug-expected" class="block mb-2 text-indigo-300">Resultado Esperado</label>
+                    <input type="text" id="bug-expected" class="bug-form-input w-full p-2 rounded" placeholder="Ej: El sistema muestra un mensaje de éxito">
+                </div>
+                 <div>
+                    <label for="bug-actual" class="block mb-2 text-indigo-300">Resultado Actual</label>
+                    <input type="text" id="bug-actual" class="bug-form-input w-full p-2 rounded" placeholder="Ej: La página muestra un error 500">
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-center text-white mt-24">El Flujo de Colaboración: Git y GitHub</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-lg">Git es la máquina del tiempo de tu código. GitHub es la nube donde colaboras. Presiona "Iniciar Flujo" para visualizar cómo los desarrolladores trabajan juntos.</p>
+
+        <div class="glass-panel p-8 max-w-4xl mx-auto">
+             <svg id="git-flow-svg" viewBox="0 0 400 150" class="w-full h-auto git-flow-svg">
+                <!-- Nodes -->
+                <g>
+                    <circle cx="50" cy="75" r="20" fill="#4f46e5" />
+                    <text x="50" y="79" text-anchor="middle" fill="white" font-size="10"><tspan x="50" dy="-2">Local</tspan><tspan x="50" dy="12">PC</tspan></text>
+                    <circle id="commit-circle" cx="50" cy="75" r="25" fill="none" stroke="#00ffff" stroke-width="2" class="commit-circle"/>
+                </g>
+                <g>
+                    <circle cx="350" cy="75" r="25" fill="#a78bfa" />
+                    <text x="350" y="79" text-anchor="middle" fill="black" font-size="10" font-weight="bold"><tspan x="350" dy="-2">Remoto</tspan><tspan x="350" dy="12">GitHub</tspan></text>
+                </g>
+                
+                <!-- Paths -->
+                <path id="push-path" d="M 75 65 Q 200 30 325 65" fill="none" stroke="#ff00de" stroke-width="2" class="flow-path"/>
+                <path id="pull-path" d="M 325 85 Q 200 120 75 85" fill="none" stroke="#00ffff" stroke-width="2" class="flow-path"/>
+                
+                 <!-- Labels -->
+                <text id="commit-label" x="110" y="25" fill="#00ffff" font-size="12" class="text-label">1. COMMIT (Guardar foto)</text>
+                <text id="push-label" x="200" y="50" text-anchor="middle" fill="#ff00de" font-size="12" class="text-label">2. PUSH (Subir cambios) →</text>
+                <text id="pull-label" x="200" y="105" text-anchor="middle" fill="#00ffff" font-size="12" class="text-label">← 3. PULL (Bajar cambios)</text>
+            </svg>
+            <div class="text-center mt-4">
+                <button id="start-flow-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded transition-colors">Iniciar Flujo</button>
+            </div>
+        </div>
+
+
+        <div class="glass-panel p-8 mt-24">
+            <h2 class="text-center text-white mt-0">Actividad de Aprendizaje N°15 (Hito 3)</h2>
+            <h3 class="text-center text-glow-final text-3xl mt-0">Inspección, Reporte y Colaboración</h3>
+            <p class="text-center text-lg max-w-3xl mx-auto">
+                Es hora de la práctica. Realiza una UAT cruzada con otro equipo, reporta los bugs que encuentres como un profesional, y crea el hogar de tu proyecto en GitHub. ¡Este es el último paso antes de la presentación final!
+            </p>
+        </div>
+
+        <!-- Navegación Inferior -->
+        <div class="mt-24 flex justify-between border-t border-indigo-500 border-opacity-30 pt-8">
+            <a href="sesion14.html" class="glass-panel px-6 py-3 text-lg font-bold">
+                &larr; Semana 14
+            </a>
+            <a href="sesion16.html" class="glass-panel px-6 py-3 text-lg font-bold">
+                Semana 16 &rarr;
+            </a>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('start-flow-btn').addEventListener('click', function() {
+            const btn = this;
+            btn.disabled = true;
+            btn.innerText = 'Ejecutando...';
+
+            const commitCircle = document.getElementById('commit-circle');
+            const commitLabel = document.getElementById('commit-label');
+            const pushPath = document.getElementById('push-path');
+            const pushLabel = document.getElementById('push-label');
+            const pullPath = document.getElementById('pull-path');
+            const pullLabel = document.getElementById('pull-label');
+            
+            // Reset animations
+            [commitCircle, commitLabel, pushPath, pushLabel, pullPath, pullLabel].forEach(el => {
+                el.style.animation = 'none';
+                void el.offsetWidth; // Trigger reflow
+            });
+
+            const commitAnim = [
+                { opacity: 0, transform: 'scale(0.5)' },
+                { opacity: 1, transform: 'scale(1.5)' },
+                { opacity: 1, transform: 'scale(1)' }
+            ];
+            
+            const labelAnim = [
+                { opacity: 0 },
+                { opacity: 1 }
+            ];
+
+            const pathAnim = [
+                { strokeDashoffset: 200 },
+                { strokeDashoffset: 0 }
+            ];
+            
+            // Sequence
+            commitCircle.animate(commitAnim, { duration: 1000, fill: 'forwards' });
+            commitLabel.animate(labelAnim, { duration: 500, delay: 500, fill: 'forwards' });
+
+            setTimeout(() => {
+                pushPath.animate(pathAnim, { duration: 1500, fill: 'forwards' });
+                pushLabel.animate(labelAnim, { duration: 500, delay: 500, fill: 'forwards' });
+            }, 1500);
+
+             setTimeout(() => {
+                pullPath.animate(pathAnim, { duration: 1500, fill: 'forwards' });
+                pullLabel.animate(labelAnim, { duration: 500, delay: 500, fill: 'forwards' });
+            }, 3500);
+
+            setTimeout(() => {
+                 btn.disabled = false;
+                 btn.innerText = 'Reiniciar Flujo';
+            }, 5500);
+        });
+    </script>
+</body>
+</html>

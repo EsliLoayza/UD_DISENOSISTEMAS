@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device--width, initial-scale=1.0">
+    <title>Semana 10: El Plan Maestro - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@400;700&display=swap');
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            scroll-behavior: smooth;
+            background-color: #0c001f;
+            color: #d1d1d1;
+            background-image: radial-gradient(circle at top right, rgba(121, 68, 154, 0.2), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(45, 87, 219, 0.2), transparent 50%);
+        }
+        .font-cyber { font-family: 'Orbitron', sans-serif; }
+        .text-glow { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0077ff, 0 0 20px #0077ff, 0 0 25px #0077ff, 0 0 30px #0077ff, 0 0 35px #0077ff; }
+        .text-glow-pink { text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 15px #ff00ff; }
+        .bg-glass {
+            background: rgba(13, 0, 31, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+        }
+        h2 { font-size: 2.8rem; font-weight: 900; }
+        /* API Console Simulator */
+        .api-console {
+            border: 1px solid rgba(0, 119, 255, 0.5);
+            box-shadow: inset 0 0 15px rgba(0, 119, 255, 0.3);
+            background: #0c001f;
+        }
+        .method-btn { transition: all 0.2s ease; border: 1px solid transparent; }
+        .method-btn.active { transform: scale(1.1); }
+        .get.active { border-color: #00aaff; color: #00aaff; box-shadow: 0 0 10px #00aaff; }
+        .post.active { border-color: #00ff88; color: #00ff88; box-shadow: 0 0 10px #00ff88; }
+        .put.active { border-color: #ffaa00; color: #ffaa00; box-shadow: 0 0 10px #ffaa00; }
+        .delete.active { border-color: #ff4444; color: #ff4444; box-shadow: 0 0 10px #ff4444; }
+        .response-code.ok { color: #00ff88; }
+        .response-code.created { color: #00ff88; }
+        .response-code.no-content { color: #ffaa00; }
+        .json-key { color: #ff00ff; }
+        .json-string { color: #00ff88; }
+        .json-number { color: #ffaa00; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <header class="p-4 sticky top-0 z-20 bg-glass">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-cyber text-white"><i class="fas fa-network-wired mr-2 text-glow-pink"></i>Diseño de Sistemas</h1>
+            <span class="text-lg font-cyber text-glow">Semana 10</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-8">
+        <div class="text-center mb-16">
+            <h1 class="text-6xl md:text-8xl font-cyber text-glow mb-4 leading-tight">EL PLAN MAESTRO</h1>
+            <p class="text-2xl text-gray-300">Arquitectura de Software y el Protocolo de los APIs</p>
+        </div>
+
+        <h2 class="font-cyber text-glow-pink text-center">Monolito vs. Microservicios</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12">¿Construimos un rascacielos masivo o un campus de edificios especializados? Esta es la primera gran decisión del arquitecto.</p>
+        
+        <div class="grid md:grid-cols-2 gap-8 items-stretch">
+            <div class="bg-glass p-8 rounded-2xl">
+                <div class="text-center mb-4"><i class="fas fa-building text-6xl text-cyan-400"></i></div>
+                <h3 class="font-cyber text-3xl text-cyan-400 text-center">ARQUITECTURA MONOLÍTICA</h3>
+                <p class="font-bold my-4">El Rascacielos "Todo en Uno". Una única y masiva unidad de código.</p>
+                <h4 class="font-bold text-lg text-green-400">PROS:</h4>
+                <ul class="list-disc list-inside mb-4">
+                    <li>Simple de desarrollar y desplegar al inicio.</li>
+                    <li>Rendimiento alto (no hay llamadas de red).</li>
+                </ul>
+                <h4 class="font-bold text-lg text-red-400">CONTRAS:</h4>
+                <ul class="list-disc list-inside">
+                    <li>Difícil de escalar y mantener a largo plazo.</li>
+                    <li>Un solo error puede derribar todo el sistema.</li>
+                </ul>
+            </div>
+            <div class="bg-glass p-8 rounded-2xl">
+                <div class="text-center mb-4"><i class="fas fa-cubes text-6xl text-pink-500"></i></div>
+                <h3 class="font-cyber text-3xl text-pink-500 text-center">ARQUITECTURA DE MICROSERVICIOS</h3>
+                <p class="font-bold my-4">El Campus de Edificios Especializados. Pequeños servicios independientes.</p>
+                <h4 class="font-bold text-lg text-green-400">PROS:</h4>
+                <ul class="list-disc list-inside mb-4">
+                    <li>Escalabilidad y resiliencia superiores.</li>
+                    <li>Equipos pueden trabajar en paralelo con libertad.</li>
+                </ul>
+                <h4 class="font-bold text-lg text-red-400">CONTRAS:</h4>
+                <ul class="list-disc list-inside">
+                    <li>Mucho más complejo de operar y monitorear.</li>
+                    <li>La comunicación entre servicios introduce latencia.</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="font-cyber text-glow-pink text-center mt-16">APIs: Los Camareros del Ciberespacio</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12">Una API es el contrato que permite la comunicación. Es el intermediario que toma tu pedido, lo lleva a la cocina y te trae el plato, sin que tú tengas que saber la receta.</p>
+
+        <div class="bg-glass rounded-2xl p-8 grid md:grid-cols-3 gap-8 items-center text-center">
+            <div>
+                <i class="fas fa-mobile-alt text-8xl text-white"></i>
+                <h3 class="font-cyber text-2xl mt-4">EL CLIENTE (Frontend)</h3>
+                <p>Hace un pedido desde el menú.</p>
+            </div>
+            <div class="relative">
+                 <i class="fas fa-long-arrow-alt-right text-6xl text-pink-500 hidden md:block absolute top-1/2 -translate-y-1/2 -left-16"></i>
+                <i class="fas fa-user-astronaut text-9xl text-glow-pink"></i>
+                <h3 class="font-cyber text-3xl mt-4 text-glow-pink">LA API (El Camarero)</h3>
+                <p>Toma el pedido, lo traduce y lo lleva a la cocina.</p>
+                <i class="fas fa-long-arrow-alt-right text-6xl text-cyan-400 hidden md:block absolute top-1/2 -translate-y-1/2 -right-16"></i>
+            </div>
+            <div>
+                 <i class="fas fa-server text-8xl text-white"></i>
+                 <h3 class="font-cyber text-2xl mt-4">EL SERVIDOR (Backend)</h3>
+                 <p>Prepara el plato (procesa los datos).</p>
+            </div>
+        </div>
+
+        <h2 class="font-cyber text-glow-pink text-center mt-16">Simulador de API REST</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12">Experimenta cómo funciona una API REST. Selecciona un método HTTP y presiona "Enviar Petición" para ver la respuesta del servidor para el recurso `/ofertas`.</p>
+
+        <div class="api-console rounded-2xl p-8 max-w-4xl mx-auto">
+            <div class="flex flex-wrap gap-4 mb-6">
+                <button class="method-btn get flex-1 p-3 rounded-lg font-cyber bg-black bg-opacity-40" data-method="GET">GET /ofertas</button>
+                <button class="method-btn get flex-1 p-3 rounded-lg font-cyber bg-black bg-opacity-40" data-method="GET_ID">GET /ofertas/{id}</button>
+                <button class="method-btn post flex-1 p-3 rounded-lg font-cyber bg-black bg-opacity-40" data-method="POST">POST /ofertas</button>
+                <button class="method-btn put flex-1 p-3 rounded-lg font-cyber bg-black bg-opacity-40" data-method="PUT">PUT /ofertas/{id}</button>
+                <button class="method-btn delete flex-1 p-3 rounded-lg font-cyber bg-black bg-opacity-40" data-method="DELETE">DELETE /ofertas/{id}</button>
+            </div>
+            <div class="text-center mb-6">
+                 <button id="send-request-btn" class="font-cyber text-xl text-white py-3 px-8 rounded-lg bg-gradient-to-r from-pink-500 to-violet-600 hover:from-pink-600 hover:to-violet-700 transition duration-300">Enviar Petición</button>
+            </div>
+            <div id="response-panel" class="mt-6 bg-black bg-opacity-60 p-6 rounded-lg font-mono text-sm hidden">
+                <h3 id="response-status" class="font-cyber text-lg mb-4"></h3>
+                <pre><code id="response-body"></code></pre>
+            </div>
+        </div>
+
+        <div class="bg-glass p-8 mt-16 rounded-2xl">
+            <h2 class="font-cyber text-glow-pink text-center mt-0">Actividad de Aprendizaje N°10</h2>
+            <h3 class="text-center text-white text-2xl mt-0 font-cyber">Definiendo el Plan Maestro de YachayConnect</h3>
+            <p class="text-center text-lg max-w-3xl mx-auto">
+                Es tu turno. Justifica la elección de arquitectura para tu proyecto y diseña el contrato de comunicación (API) para el recurso `Ofertas`. Este documento es el plano que guiará a los equipos de frontend y backend.
+            </p>
+        </div>
+
+        <div class="mt-24 flex justify-between border-t border-pink-500 border-opacity-30 pt-8">
+            <a href="sesion9.html" class="bg-glass px-6 py-3 text-lg font-cyber hover:border-pink-500 rounded-lg">
+                &larr; Semana 9
+            </a>
+            <a href="sesion11.html" class="bg-glass px-6 py-3 text-lg font-cyber hover:border-cyan-400 rounded-lg">
+                Semana 11 &rarr;
+            </a>
+        </div>
+    </main>
+
+    <script>
+        const methodButtons = document.querySelectorAll('.method-btn');
+        const sendRequestBtn = document.getElementById('send-request-btn');
+        const responsePanel = document.getElementById('response-panel');
+        const responseStatus = document.getElementById('response-status');
+        const responseBody = document.getElementById('response-body');
+        let activeMethod = 'GET';
+
+        const apiResponses = {
+            GET: {
+                status: '200 OK',
+                statusClass: 'ok',
+                body: `[
+  { <span class="json-key">"id"</span>: <span class="json-number">1</span>, <span class="json-key">"titulo"</span>: <span class="json-string">"Prácticas en Frontend"</span> },
+  { <span class="json-key">"id"</span>: <span class="json-number">2</span>, <span class="json-key">"titulo"</span>: <span class="json-string">"Asistente de Sistemas"</span> }
+]`
+            },
+            GET_ID: {
+                status: '200 OK',
+                statusClass: 'ok',
+                body: `{
+  <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+  <span class="json-key">"titulo"</span>: <span class="json-string">"Prácticas en Frontend"</span>,
+  <span class="json-key">"descripcion"</span>: <span class="json-string">"Buscamos un crack..."</span>,
+  <span class="json-key">"salario"</span>: <span class="json-number">1025.00</span>
+}`
+            },
+            POST: {
+                status: '201 Created',
+                statusClass: 'created',
+                body: `{
+  <span class="json-key">"id"</span>: <span class="json-number">3</span>,
+  <span class="json-key">"titulo"</span>: <span class="json-string">"QA Tester Junior"</span>,
+  <span class="json-key">"descripcion"</span>: <span class="json-string">"Buscamos..."</span>
+}`
+            },
+            PUT: {
+                status: '200 OK',
+                statusClass: 'ok',
+                body: `{
+  <span class="json-key">"id"</span>: <span class="json-number">3</span>,
+  <span class="json-key">"titulo"</span>: <span class="json-string">"QA Tester Junior (Remoto)"</span>,
+  <span class="json-key">"salario"</span>: <span class="json-number">1250.00</span>
+}`
+            },
+            DELETE: {
+                status: '204 No Content',
+                statusClass: 'no-content',
+                body: '// No hay cuerpo en la respuesta'
+            }
+        };
+
+        methodButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                methodButtons.forEach(b => b.classList.remove('active', 'get', 'post', 'put', 'delete'));
+                btn.classList.add('active');
+                if (btn.classList.contains('get')) btn.classList.add('get');
+                if (btn.classList.contains('post')) btn.classList.add('post');
+                if (btn.classList.contains('put')) btn.classList.add('put');
+                if (btn.classList.contains('delete')) btn.classList.add('delete');
+                activeMethod = btn.dataset.method;
+            });
+        });
+        
+        // Set initial state
+        document.querySelector('.method-btn.get').click();
+
+        sendRequestBtn.addEventListener('click', () => {
+            const response = apiResponses[activeMethod];
+            responseStatus.className = `font-cyber text-lg mb-4 response-code ${response.statusClass}`;
+            responseStatus.textContent = `STATUS: ${response.status}`;
+            responseBody.innerHTML = response.body;
+            responsePanel.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

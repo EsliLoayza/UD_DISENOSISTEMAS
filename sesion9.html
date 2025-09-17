@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 9: Diseñando la Experiencia - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            scroll-behavior: smooth;
+            background-color: #0d0124;
+            color: #e0e0e0;
+        }
+        .text-gradient {
+            background-image: linear-gradient(90deg, #f02fc2, #6094ea);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .bg-gradient-animated {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 30px rgba(240, 47, 194, 0.5);
+        }
+        h2 {
+            font-size: 2.5rem; font-weight: 900; margin-top: 3rem; margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(240, 47, 194, 0.5);
+        }
+        /* Figma Simulator */
+        #figma-simulator {
+            position: relative;
+            background-color: #1E1E1E;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            padding-top: 50px;
+        }
+        #figma-simulator::before {
+            content: ' ';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 12px; height: 12px;
+            background: #FF5F56; border-radius: 50%;
+            box-shadow: 20px 0 #FFBD2E, 40px 0 #27C93F;
+        }
+        .hotspot {
+            position: absolute;
+            border: 2px dashed rgba(240, 47, 194, 0.7);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .hotspot:hover {
+            background-color: rgba(240, 47, 194, 0.3);
+        }
+        .hotspot .tooltip {
+            visibility: hidden; opacity: 0;
+            position: absolute;
+            background-color: #1a0230; color: #fff;
+            padding: 10px; border-radius: 5px;
+            bottom: 110%; left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            text-align: center;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+        .hotspot:hover .tooltip {
+            visibility: visible; opacity: 1;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Header -->
+    <header class="p-4 sticky top-0 z-10" style="background: rgba(13, 1, 36, 0.8); backdrop-filter: blur(10px);">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white"><i class="fas fa-magic mr-2 text-gradient"></i>Diseño de Sistemas - IESTP CSR</h1>
+            <span class="text-lg font-semibold text-gradient">Semana 9</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-8">
+        <div class="text-center mb-16">
+            <h1 class="text-6xl md:text-8xl font-black text-gradient mb-4 leading-tight">Diseñando la Experiencia</h1>
+            <p class="text-2xl text-gray-300">De la Lógica Abstracta a la Interfaz Vibrante con UI/UX</p>
+        </div>
+
+        <h2 class="text-center text-gradient">El Alma (UX) vs. El Cuerpo (UI)</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12">Aunque viajan juntos, son dos universos diferentes. La UX es la ingeniería invisible de la intuición. La UI es el arte visible de la atracción. Una app exitosa necesita dominar ambos.</p>
+        
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="glass-card p-8 text-center">
+                <i class="fas fa-brain text-6xl mb-4 text-cyan-400"></i>
+                <h3 class="text-3xl font-bold text-cyan-400">Experiencia de Usuario (UX)</h3>
+                <p class="text-lg">Es el **PORQUÉ**. La estructura, el flujo, la lógica. Se siente, no se ve. Define si una app es útil y fácil de usar.</p>
+            </div>
+            <div class="glass-card p-8 text-center">
+                <i class="fas fa-palette text-6xl mb-4 text-pink-500"></i>
+                <h3 class="text-3xl font-bold text-pink-500">Interfaz de Usuario (UI)</h3>
+                <p class="text-lg">Es el **QUÉ**. Los colores, las fuentes, los botones. Es lo que ves y tocas. Define si una app es atractiva y visualmente placentera.</p>
+            </div>
+        </div>
+
+        <h2 class="text-center text-gradient">El Proceso Creativo en 3 Pasos</h2>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-8 my-12">
+            <div class="glass-card p-6 text-center flex-1">
+                <div class="text-5xl font-black text-gray-500 mb-2">01</div>
+                <h3 class="text-2xl text-white">Wireframe</h3>
+                <p>El esqueleto en blanco y negro. 100% estructura.</p>
+            </div>
+            <i class="fas fa-arrow-right text-4xl text-gradient hidden md:block"></i>
+            <div class="glass-card p-6 text-center flex-1">
+                <div class="text-5xl font-black text-gray-500 mb-2">02</div>
+                <h3 class="text-2xl text-white">Mockup</h3>
+                <p>La piel y el color. La foto estática final.</p>
+            </div>
+            <i class="fas fa-arrow-right text-4xl text-gradient hidden md:block"></i>
+             <div class="glass-card p-6 text-center flex-1">
+                <div class="text-5xl font-black text-gray-500 mb-2">03</div>
+                <h3 class="text-2xl text-white">Prototipo</h3>
+                <p>El alma en movimiento. La simulación interactiva.</p>
+            </div>
+        </div>
+
+        <h2 class="text-center text-gradient">Simulador Interactivo de Figma</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12">Figma es nuestro lienzo digital. No te preocupes por sus cientos de opciones, para crear wireframes potentes solo necesitas dominar estas 4 herramientas. ¡Pasa el cursor sobre las áreas resaltadas para explorarlas!</p>
+        
+        <div id="figma-simulator" class="w-full max-w-4xl mx-auto h-96 my-8">
+            <!-- Barra de Herramientas -->
+            <div class="hotspot" style="top: 10px; left: 80px; width: 180px; height: 35px;">
+                <div class="tooltip">
+                    <strong>Herramientas de Forma (R, O):</strong> ¡Tus mejores amigos! Usa el Rectángulo (R) para botones, imágenes y contenedores. Usa la Elipse (O) para avatares.
+                </div>
+            </div>
+            <div class="hotspot" style="top: 10px; left: 270px; width: 40px; height: 35px;">
+                <div class="tooltip">
+                    <strong>Herramienta de Texto (T):</strong> Para añadir todos los títulos, etiquetas y párrafos. Juega con el tamaño para crear jerarquía visual.
+                </div>
+            </div>
+
+            <!-- Panel Izquierdo (Capas) -->
+             <div class="hotspot" style="top: 60px; left: 10px; width: 180px; height: 300px;">
+                <div class="tooltip">
+                    <strong>Panel de Capas:</strong> Aquí verás todos los elementos que agregas, como una lista. Es útil para organizar tu diseño y seleccionar elementos que están detrás de otros.
+                </div>
+            </div>
+            
+            <!-- Lienzo Central -->
+            <div class="hotspot" style="top: 60px; left: 210px; width: 380px; height: 300px;">
+                 <div class="tooltip" style="bottom: auto; top: 110%;">
+                    <strong>El Frame (F):</strong> ¡Tu lienzo! Es el primer paso. Presiona 'F' y elige un tamaño de dispositivo. Aquí es donde ocurre toda la magia del diseño.
+                </div>
+            </div>
+
+            <!-- Panel Derecho (Propiedades) -->
+            <div class="hotspot" style="top: 60px; right: 10px; width: 180px; height: 300px;">
+                <div class="tooltip">
+                    <strong>Panel de Propiedades:</strong> Cuando seleccionas un elemento, aquí cambias sus detalles: color (Fill), borde (Stroke), alineación, etc. Para wireframes, ¡mantente en escala de grises!
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card p-8 mt-16">
+            <h2 class="text-center text-gradient mt-0">Actividad de Aprendizaje N°09</h2>
+            <h3 class="text-center text-white text-2xl mt-0">El Primer Boceto de YachayConnect</h3>
+            <p class="text-center text-lg max-w-3xl mx-auto">
+                Es hora de plasmar tus ideas. Abre **Figma**, elige una Historia de Usuario clave y crea el **wireframe de baja fidelidad**. Recuerda la regla de oro: ¡sin colores! Enfócate 100% en la estructura, la claridad y la usabilidad.
+            </p>
+             <div class="text-center mt-8">
+                 <a href="https://www.figma.com" target="_blank" class="inline-block text-white font-bold py-4 px-8 rounded-lg transition duration-300 text-xl bg-gradient-animated">
+                    <i class="fab fa-figma mr-2"></i>Ir a Figma
+                </a>
+            </div>
+        </div>
+
+        <!-- Navegación Inferior -->
+        <div class="mt-24 flex justify-between border-t border-gray-700 pt-8">
+            <a href="sesion8.html" class="glass-card px-6 py-3 text-lg font-bold hover:border-pink-500">
+                &larr; Semana 8
+            </a>
+            <a href="sesion10.html" class="glass-card px-6 py-3 text-lg font-bold hover:border-cyan-400">
+                Semana 10 &rarr;
+            </a>
+        </div>
+    </main>
+
+</body>
+</html>

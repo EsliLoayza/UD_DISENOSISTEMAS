@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 7: Los Ladrillos del Software - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        h2 {
+            font-size: 1.875rem; font-weight: 900; color: #E2E8F0; margin-top: 2rem; margin-bottom: 1rem;
+            border-bottom: 3px solid #4A5568; padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.5rem; font-weight: 700; color: #A0AEC0; margin-top: 1.5rem; margin-bottom: 0.75rem;
+        }
+        p, li {
+            line-height: 1.75; margin-bottom: 1rem; font-size: 1.125rem;
+        }
+        .card {
+            background-color: #2D3748; border-radius: 0.75rem; padding: 1.5rem; border: 1px solid #4A5568;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+        .code-block {
+            background-color: #1A202C;
+            border-left: 4px solid #63B3ED;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+        }
+        
+        /* Estilos para el diagrama SVG interactivo */
+        .svg-diagram {
+            background-color: #1A202C;
+            border-radius: 0.75rem;
+            border: 1px solid #4A5568;
+            user-select: none;
+        }
+        .class-rect { fill: #2D3748; stroke: #4A5568; stroke-width: 1.5; }
+        .class-name { font-weight: bold; fill: #E2E8F0; font-size: 14px; }
+        .class-attribute, .class-method { font-family: 'Courier New', Courier, monospace; font-size: 12px; fill: #CBD5E0; }
+        .class-separator { stroke: #4A5568; stroke-width: 1; }
+        .connector { stroke: #A0AEC0; stroke-width: 1.5; }
+        .composition-diamond { fill: #A0AEC0; stroke: #A0AEC0; stroke-width: 1.5; }
+        .multiplicity-text { fill: #A0AEC0; font-size: 12px; }
+        
+        /* Interactivity */
+        g.class-group { transition: transform 0.2s ease-out; }
+        g.class-group:hover { cursor: pointer; transform: scale(1.03); }
+        g.class-group:hover .class-rect { fill: #4A5568; stroke: #63B3ED; }
+        
+        /* Animation */
+        .anim-draw { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 2s ease-in-out forwards; }
+        @keyframes draw { to { stroke-dashoffset: 0; } }
+        .anim-fade-in { opacity: 0; animation: fadeIn 0.8s ease forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* Modal for details */
+        #modal { transition: opacity 0.3s ease; }
+        #modal-content { transition: transform 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-400">
+
+    <!-- Header -->
+    <header class="bg-gray-800 p-4 shadow-lg sticky top-0 z-20">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white"><i class="fas fa-drafting-compass mr-2"></i>Diseño de Sistemas - IESTP CSR</h1>
+            <span class="text-lg font-semibold text-blue-400">Semana 7</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-8">
+        <div class="content-area max-w-5xl mx-auto">
+            
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-black text-white mb-2">Los Ladrillos del Software</h1>
+                <p class="text-2xl text-blue-400">Diseñando la Estructura con Diagramas de Clases</p>
+            </div>
+
+            <div class="card mb-8 text-center">
+                 <i class="fas fa-sitemap text-4xl text-blue-400 mb-4"></i>
+                <p class="text-xl">
+                Si el Diagrama de Casos de Uso fue el mapa del terreno, el **Diagrama de Clases** es el plano estructural de cada edificio. Hoy definiremos el esqueleto de nuestro software, la base sobre la cual se construirán la base de datos y el código.
+                </p>
+            </div>
+
+            <h2><i class="fas fa-cookie-bite mr-3"></i>Concepto Clave: Clase vs. Objeto</h2>
+            <div class="grid md:grid-cols-2 gap-6 items-center">
+                <div class="text-center">
+                    <i class="fas fa-scroll text-8xl text-yellow-400"></i>
+                    <h3 class="text-white">Clase: El Plano</h3>
+                    <p>Es la plantilla, el molde. Define las características y acciones que algo tendrá. No es algo real, es una definición.</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-building text-8xl text-blue-400"></i>
+                    <h3 class="text-white">Objeto: El Edificio</h3>
+                    <p>Es la instancia real y tangible creada a partir del plano. Es lo que realmente existe y con lo que interactuamos.</p>
+                </div>
+            </div>
+             <p class="mt-4 text-center">La clase `Estudiante` es el plano. <strong>Javier Quispe</strong> es un objeto real creado a partir de ese plano.</p>
+
+
+            <h2><i class="fas fa-microscope mr-3"></i>Anatomía de una Clase</h2>
+            <p>Una clase en UML es un rectángulo con tres secciones. Pasa el cursor sobre cada sección para saber más.</p>
+            <div class="bg-gray-800 p-6 rounded-lg my-6 flex justify-center">
+                 <svg width="200" height="250">
+                    <rect x="1" y="1" width="198" height="248" class="class-rect"/>
+                    <g class="tooltip">
+                        <rect x="1" y="1" width="198" height="40" fill="transparent"/>
+                        <text x="100" y="25" text-anchor="middle" class="class-name">Estudiante</text>
+                        <title class="tooltiptext">1. Nombre: El identificador único de la clase. Debe ser un sustantivo en singular.</title>
+                    </g>
+                    <line x1="1" y1="41" x2="199" y2="41" class="class-separator"/>
+                    <g class="tooltip">
+                        <rect x="1" y="41" width="198" height="100" fill="transparent"/>
+                        <text x="10" y="65" class="class-attribute">- nombre: String</text>
+                        <text x="10" y="85" class="class-attribute">- carrera: String</text>
+                        <text x="10" y="105" class="class-attribute">- ciclo: Integer</text>
+                        <text x="10" y="125" class="class-attribute">- email: String</text>
+                        <title class="tooltiptext">2. Atributos: Las características o datos que la clase almacena. Son sus variables internas.</title>
+                    </g>
+                    <line x1="1" y1="141" x2="199" y2="141" class="class-separator"/>
+                    <g class="tooltip">
+                        <rect x="1" y="141" width="198" height="108" fill="transparent"/>
+                        <text x="10" y="165" class="class-method">+ buscarOfertas(): List&lt;Oferta&gt;</text>
+                        <text x="10" y="185" class="class-method">+ postular(oferta: Oferta): void</text>
+                        <text x="10" y="205" class="class-method">+ verPerfil(): Perfil</text>
+                        <title class="tooltiptext">3. Métodos: Las acciones o comportamientos que la clase puede realizar. Son sus funciones.</title>
+                    </g>
+                 </svg>
+            </div>
+
+            <h2><i class="fas fa-project-diagram mr-3"></i>Diagrama de Clases de YachayConnect</h2>
+            <p>A continuación se presenta el esqueleto estructural de nuestro sistema. Haz clic sobre cada clase o relación para obtener una explicación detallada de su propósito y las decisiones de diseño tomadas.</p>
+            <div id="diagram-wrapper" class="my-6">
+                <!-- SVG Diagram will be injected here -->
+            </div>
+             <div class="text-center mt-4">
+                <button id="build-diagram-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    <i class="fas fa-play mr-2"></i>Construir Diagrama Interactivo
+                </button>
+            </div>
+            
+            <h2><i class="fas fa-tasks mr-3"></i>Actividad de Aprendizaje N°07</h2>
+            <h3>Diseñando el Esqueleto de YachayConnect</h3>
+            <p>
+                ¡Es tu turno de ser el ingeniero estructural! Usando la herramienta online **diagrams.net**, crearás el Diagrama de Clases para tu proyecto. Identifica las clases, define sus atributos y métodos, y establece las relaciones lógicas entre ellas.
+            </p>
+            <div class="p-6 bg-gray-800 rounded-lg text-center">
+                <p class="text-lg">Este diagrama será la guía definitiva para crear la base de datos y estructurar el código de la aplicación.</p>
+                 <a href="https://app.diagrams.net/" target="_blank" class="mt-4 inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 text-lg">
+                    <i class="fas fa-pen-ruler mr-2"></i>Abrir diagrams.net
+                </a>
+            </div>
+
+            <!-- Navegación Inferior -->
+            <div class="mt-12 flex justify-between border-t border-gray-700 pt-6">
+                <a href="sesion6.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    &larr; Semana 6
+                </a>
+                <a href="sesion8.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Semana 8 &rarr;
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-30 opacity-0 pointer-events-none">
+        <div id="modal-content" class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md border border-blue-400 transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-2xl font-bold text-white mt-0"></h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <p id="modal-body" class="text-gray-300"></p>
+        </div>
+    </div>
+
+    <script>
+    const buildDiagramBtn = document.getElementById('build-diagram-btn');
+    const diagramWrapper = document.getElementById('diagram-wrapper');
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+
+    const diagramData = {
+        'class-empresa': { title: 'Clase: Empresa', body: 'Representa a una organización que publica ofertas. Actúa como el "todo" en una relación de Composición con Oferta. Si una Empresa se elimina, sus Ofertas asociadas también deberían ser eliminadas.' },
+        'class-oferta': { title: 'Clase: Oferta', body: 'Representa una vacante de práctica específica. Es la "parte" de una Empresa. No puede existir por sí sola en el sistema sin estar asociada a una Empresa.' },
+        'class-estudiante': { title: 'Clase: Estudiante', body: 'Representa a un alumno que busca prácticas. Se relaciona con Oferta a través de la clase de asociación Postulacion.' },
+        'class-postulacion': { title: 'Clase: Postulacion', body: 'Es una Clase de Asociación. Existe para modelar la relación "muchos a muchos" entre Estudiante y Oferta. Almacena información propia del acto de postular, como la fecha y el estado.' },
+        'relation-composition': { title: 'Relación: Composición', body: 'El rombo negro indica una relación de ciclo de vida fuerte. La Oferta (parte) no puede existir sin la Empresa (todo). La multiplicidad "1" en Empresa y "0..*" en Oferta significa que una empresa puede tener cero o muchas ofertas.' },
+        'relation-association': { title: 'Relación: Asociación', body: 'Las líneas punteadas indican que Postulacion conecta a Estudiante y Oferta. Un estudiante puede tener muchas postulaciones (1..*), y una oferta puede recibir muchas postulaciones (0..*).' }
+    };
+
+    function showModal(id) {
+        const data = diagramData[id];
+        if (data) {
+            modalTitle.textContent = data.title;
+            modalBody.textContent = data.body;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+        }
+    }
+
+    closeModalBtn.addEventListener('click', () => {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modalContent.classList.add('scale-95');
+    });
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModalBtn.click();
+        }
+    });
+
+    buildDiagramBtn.addEventListener('click', function() {
+        diagramWrapper.innerHTML = '';
+        const svgCode = `
+            <svg viewBox="0 0 800 500" class="svg-diagram">
+                <!-- Clases -->
+                <g id="class-empresa" class="class-group anim-fade-in" style="animation-delay: 0.5s;" onclick="showModal('class-empresa')">
+                    <rect class="class-rect" x="50" y="50" width="200" height="150" rx="5"></rect>
+                    <text class="class-name" x="150" y="75" text-anchor="middle">Empresa</text>
+                    <line class="class-separator" x1="50" y1="90" x2="250" y2="90"></line>
+                    <text class="class-attribute" x="60" y="110">- razonSocial: String</text>
+                    <text class="class-attribute" x="60" y="125">- ruc: String</text>
+                    <line class="class-separator" x1="50" y1="140" x2="250" y2="140"></line>
+                    <text class="class-method" x="60" y="160">+ publicarOferta(): void</text>
+                </g>
+                <g id="class-oferta" class="class-group anim-fade-in" style="animation-delay: 1s;" onclick="showModal('class-oferta')">
+                    <rect class="class-rect" x="550" y="50" width="200" height="150" rx="5"></rect>
+                    <text class="class-name" x="650" y="75" text-anchor="middle">Oferta</text>
+                    <line class="class-separator" x1="550" y1="90" x2="750" y2="90"></line>
+                    <text class="class-attribute" x="560" y="110">- titulo: String</text>
+                    <text class="class-attribute" x="560" y="125">- descripcion: String</text>
+                    <line class="class-separator" x1="550" y1="140" x2="750" y2="140"></line>
+                    <text class="class-method" x="560" y="160">+ cerrar(): void</text>
+                </g>
+                <g id="class-estudiante" class="class-group anim-fade-in" style="animation-delay: 1.5s;" onclick="showModal('class-estudiante')">
+                    <rect class="class-rect" x="50" y="300" width="200" height="150" rx="5"></rect>
+                    <text class="class-name" x="150" y="325" text-anchor="middle">Estudiante</text>
+                    <line class="class-separator" x1="50" y1="340" x2="250" y2="340"></line>
+                    <text class="class-attribute" x="60" y="360">- nombre: String</text>
+                    <text class="class-attribute" x="60" y="375">- carrera: String</text>
+                    <line class="class-separator" x1="50" y1="390" x2="250" y2="390"></line>
+                    <text class="class-method" x="60" y="410">+ postular(oferta): void</text>
+                </g>
+                <g id="class-postulacion" class="class-group anim-fade-in" style="animation-delay: 2s;" onclick="showModal('class-postulacion')">
+                    <rect class="class-rect" x="300" y="225" width="200" height="100" rx="5"></rect>
+                    <text class="class-name" x="400" y="250" text-anchor="middle">Postulacion</text>
+                    <line class="class-separator" x1="300" y1="265" x2="500" y2="265"></line>
+                    <text class="class-attribute" x="310" y="285">- fecha: Date</text>
+                    <text class="class-attribute" x="310" y="300">- estado: String</text>
+                </g>
+
+                <!-- Relaciones -->
+                <g id="relation-composition" class="anim-fade-in" style="animation-delay: 2.5s;" onclick="showModal('relation-composition')">
+                    <line class="connector" x1="250" y1="125" x2="550" y2="125"></line>
+                    <polygon class="composition-diamond" points="250,125 265,115 280,125 265,135"></polygon>
+                    <text class="multiplicity-text" x="285" y="120">1</text>
+                    <text class="multiplicity-text" x="520" y="120">0..*</text>
+                </g>
+                <g id="relation-association" class="anim-fade-in" style="animation-delay: 3s;" onclick="showModal('relation-association')">
+                    <line class="connector" x1="250" y1="375" x2="350" y2="325" style="stroke-dasharray: 5,5;"></line>
+                    <line class="connector" x1="550" y1="200" x2="450" y2="225" style="stroke-dasharray: 5,5;"></line>
+                </g>
+            </svg>
+        `;
+        diagramWrapper.innerHTML = svgCode;
+        this.disabled = true;
+        this.innerHTML = '<i class="fas fa-check mr-2"></i>Diagrama Construido';
+    });
+    </script>
+</body>
+</html>

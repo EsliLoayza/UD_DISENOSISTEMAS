@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 3: Escuchando al Cliente - Diseño de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        .content-area h2 {
+            font-size: 1.875rem; font-weight: 900; color: #E2E8F0; margin-top: 2rem; margin-bottom: 1rem;
+            border-bottom: 3px solid #4A5568; padding-bottom: 0.5rem;
+        }
+        .content-area h3 {
+            font-size: 1.5rem; font-weight: 700; color: #A0AEC0; margin-top: 1.5rem; margin-bottom: 0.75rem;
+        }
+        .content-area p, .content-area li {
+            line-height: 1.75; margin-bottom: 1rem; font-size: 1.125rem;
+        }
+        .card {
+            background-color: #2D3748; border-radius: 0.75rem; padding: 1.5rem; border: 1px solid #4A5568;
+        }
+        .persona-card {
+             background-color: #1A202C; border-radius: 0.75rem; padding: 2rem; border: 1px solid #4A5568;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-400">
+
+    <!-- Header -->
+    <header class="bg-gray-800 p-4 shadow-lg sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white"><i class="fas fa-drafting-compass mr-2"></i>Diseño de Sistemas - IESTP CSR</h1>
+            <span class="text-lg font-semibold text-blue-400">Semana 3</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-8">
+        <div class="content-area max-w-5xl mx-auto">
+            
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-black text-white mb-2">Escuchando al Cliente</h1>
+                <p class="text-2xl text-blue-400">Dejando de suponer, empezando a entender.</p>
+            </div>
+
+            <div class="card mb-8">
+                <p class="text-xl">
+                Esta semana nos transformamos en detectives. Nuestra misión es investigar a nuestros usuarios para entender sus necesidades reales. Aprenderemos que diseñar no es adivinar, es empatizar.
+                </p>
+            </div>
+
+            <h2><i class="fas fa-clipboard-list mr-3"></i>Funcional vs. No Funcional</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card border-green-400">
+                    <h3 class="mt-0 text-green-400"><i class="fas fa-cogs mr-2"></i>Requisitos Funcionales</h3>
+                    <p class="text-lg font-bold text-white">¿QUÉ HACE el sistema?</p>
+                    <p>Son las acciones, las características. Por ejemplo, en YachayConnect: "Publicar una oferta", "Buscar practicantes".</p>
+                </div>
+                <div class="card border-yellow-400">
+                    <h3 class="mt-0 text-yellow-400"><i class="fas fa-star mr-2"></i>Requisitos No Funcionales</h3>
+                    <p class="text-lg font-bold text-white">¿CÓMO ES el sistema?</p>
+                    <p>Son los atributos de calidad. Por ejemplo: que sea "rápido", "seguro", "fácil de usar".</p>
+                </div>
+            </div>
+
+            <div class="card bg-blue-900/50 my-12 border-blue-400">
+                <h2 class="border-blue-400 mt-0"><i class="fas fa-user-secret mr-3"></i>La Herramienta Clave: User Personas</h2>
+                <p class="text-xl">
+                    Para no olvidar nunca para quién diseñamos, creamos "retratos hablados" de nuestros usuarios principales. Un User Persona es un personaje ficticio que representa a un grupo de usuarios, ayudándonos a diseñar con empatía y enfoque.
+                </p>
+            </div>
+
+            <h3><i class="fas fa-address-card mr-2"></i>Anatomía de una User Persona</h3>
+            <div class="persona-card grid md:grid-cols-3 gap-8 items-center">
+                <div class="md:col-span-1 text-center">
+                    <img src="https://i.imgur.com/O5t2J0B.jpg" alt="[Imagen de un rostro de un estudiante]" class="rounded-full w-48 h-48 mx-auto border-4 border-blue-500 shadow-lg">
+                    <h3 class="text-white mt-4">Javier Quispe</h3>
+                    <p class="text-blue-400 -mt-2">El Estudiante Ambicioso</p>
+                </div>
+                <div class="md:col-span-2">
+                    <p class="text-sm italic">"Soy bueno en lo que hago, pero necesito una oportunidad para demostrarlo. Siento que las empresas no saben que existo."</p>
+                    <h4 class="text-lg font-bold text-white mt-4">Metas:</h4>
+                    <ul class="list-disc list-inside text-gray-300">
+                        <li>Conseguir su primera práctica pre-profesional.</li>
+                        <li>Aplicar sus conocimientos en un proyecto real.</li>
+                    </ul>
+                    <h4 class="text-lg font-bold text-white mt-4">Frustraciones:</h4>
+                    <ul class="list-disc list-inside text-gray-300">
+                        <li>No sabe dónde buscar ofertas para practicantes.</li>
+                        <li>Siente que su CV se pierde entre cientos de postulantes.</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <h2 class="mt-12"><i class="fas fa-tasks mr-3"></i>Actividad de Aprendizaje N°03</h2>
+            <h3>Creando a los Protagonistas de YachayConnect</h3>
+            <p>
+                ¡Tu turno! En equipos, usarán la plantilla proporcionada para dar vida a los dos usuarios clave de nuestra plataforma: el **estudiante** que busca una oportunidad y el **reclutador** de una empresa local que busca talento.
+            </p>
+            <p class="p-4 bg-gray-800 rounded-lg">
+                Pónganse en sus zapatos, piensen en sus metas y frustraciones. Estas "Personas" serán nuestra guía durante todo el proceso de diseño.
+            </p>
+
+            <!-- Navegación Inferior -->
+                        <div class="mt-12 flex justify-between border-t border-gray-700 pt-6">
+                <a href="sesion2.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    &larr; Semana 2
+                </a>
+                <a href="sesion4.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Semana 4 &rarr;
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
