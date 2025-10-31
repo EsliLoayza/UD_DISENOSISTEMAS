@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesión 10: Arquitectura y APIs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+            color: #b0b0b0;
+            border-bottom: 4px solid transparent;
+        }
+        .tab-button.active {
+            color: white;
+            border-bottom-color: #10b981;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .code-block {
+            font-family: 'SF Mono', 'Courier New', Courier, monospace;
+            background-color: #262626;
+            color: #f5f5f5;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.9;
+            border: 1px solid #444;
+        }
+        .highlight { background-color: rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 4px; font-weight: bold; color: #6ee7b7;}
+        .interactive-box {
+            background-color: #262626;
+            border: 1px solid #444;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .message {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-family: 'SF Mono', Courier, monospace;
+        }
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .request-msg { background-color: #1e40af; color: #dbeafe; }
+        .response-msg { background-color: #166534; color: #dcfce7; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-emerald-700 text-white shadow-lg">
+        <div class="container mx-auto px-6 py-10">
+            <h1 class="text-4xl md:text-5xl font-black text-neutral-900">Sesión 10: El Plan Maestro</h1>
+            <p class="mt-2 text-xl text-neutral-800">Arquitectura de Software y el Poder de las APIs</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <div class="bg-neutral-900 p-6 rounded-xl shadow-lg border-l-8 border-emerald-700">
+            <h2 class="text-3xl font-bold text-white">De Ingenieros a Urbanistas Digitales</h2>
+            <p class="mt-4 text-lg text-neutral-300">
+                Hemos diseñado los edificios (Clases) y los flujos (Secuencias). Ahora, en la Sesión 10, nos convertimos en los urbanistas de YachayConnect. Decidiremos el <span class="highlight">plano de la ciudad (Arquitectura)</span> y diseñaremos las <span class="highlight">carreteras y el idioma oficial (la API)</span> que permitirán que todo se comunique.
+            </p>
+        </div>
+
+        <div class="mt-12">
+            <div class="border-b border-neutral-700">
+                <nav class="flex flex-wrap" id="tabs">
+                    <button data-tab="1" class="tab-button active font-bold py-3 px-6">1. Arquitectura de Software</button>
+                    <button data-tab="2" class="tab-button font-bold py-3 px-6">2. La Analogía del Camarero (VIVO)</button>
+                    <button data-tab="3" class="tab-button font-bold py-3 px-6">3. Simulador de API REST (VIVO)</button>
+                    <button data-tab="4" class="tab-button font-bold py-3 px-6">4. Solución Ficha 10</button>
+                </nav>
+            </div>
+
+            <div id="tab-contents" class="bg-neutral-900 p-6 rounded-b-xl rounded-r-xl shadow-lg">
+                <!-- Tab 1: Arquitectura -->
+                <div id="tab-1" class="tab-content active">
+                    <h3 class="text-3xl font-bold text-emerald-500 mb-6">Monolito vs. Microservicios</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="interactive-box">
+                            <h4 class="text-2xl font-bold mb-3">Arquitectura Monolítica</h4>
+                            <p class="mb-4 text-neutral-400"><span class="font-bold text-white">Analogía:</span> Un Rascacielos "Todo en Uno".</p>
+                            <p class="mb-4">Toda la aplicación (interfaz, lógica de negocio, acceso a datos) es una única unidad indivisible. Si una parte falla, todo el edificio puede colapsar.</p>
+                            <h5 class="font-bold text-white mb-2">Pros:</h5>
+                            <ul class="list-disc list-inside text-neutral-300 mb-4">
+                                <li>Simple de empezar y desarrollar.</li>
+                                <li>Fácil de probar (todo en un solo lugar).</li>
+                                <li>Despliegue sencillo.</li>
+                            </ul>
+                            <h5 class="font-bold text-red-400 mb-2">Contras:</h5>
+                            <ul class="list-disc list-inside text-neutral-300">
+                                <li>Difícil de escalar (si necesitas más potencia en "usuarios", debes escalar todo el rascacielos).</li>
+                                <li>Tecnología "atrapada".</li>
+                                <li>Frágil: un error tumba todo.</li>
+                            </ul>
+                        </div>
+                        <div class="interactive-box">
+                            <h4 class="text-2xl font-bold mb-3">Arquitectura de Microservicios</h4>
+                            <p class="mb-4 text-neutral-400"><span class="font-bold text-white">Analogía:</span> Un Campus de Edificios Especializados.</p>
+                            <p class="mb-4">La aplicación se divide en servicios pequeños e independientes (un edificio para "usuarios", otro para "oportunidades", otro para "notificaciones").</p>
+                            <h5 class="font-bold text-green-400 mb-2">Pros:</h5>
+                            <ul class="list-disc list-inside text-neutral-300 mb-4">
+                                <li>Escalabilidad independiente (puedes añadir 10 pisos solo al edificio de "usuarios").</li>
+                                <li>Libertad tecnológica (cada edificio con su mejor tecnología).</li>
+                                <li>Resiliencia: si un edificio falla, el resto del campus sigue funcionando.</li>
+                            </ul>
+                            <h5 class="font-bold text-white mb-2">Contras:</h5>
+                            <ul class="list-disc list-inside text-neutral-300">
+                                <li>Complejidad operacional (muchas partes que gestionar).</li>
+                                <li>La comunicación entre servicios es más compleja.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab 2: El Camarero -->
+                <div id="tab-2" class="tab-content">
+                    <h3 class="text-3xl font-bold text-emerald-500 mb-6">Interactivo: La Analogía del Camarero</h3>
+                    <p class="mb-6 text-neutral-400">Una API es un contrato, un intermediario. En el restaurante del software, el <span class="highlight">Camarero</span> es la API. No entras a la cocina a prepararte la comida; le das una orden clara al camarero y él se encarga del resto.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="interactive-box">
+                            <h4 class="text-xl font-bold mb-3">1. Cliente (Tu App)</h4>
+                            <label for="pedido-menu" class="block text-sm font-medium text-neutral-300 mb-2">Selecciona tu pedido:</label>
+                            <select id="pedido-menu" class="w-full p-2 rounded bg-neutral-700 text-white border border-neutral-600">
+                                <option value="Lomo Saltado">Lomo Saltado</option>
+                                <option value="Aji de Gallina">Aji de Gallina</option>
+                                <option value="Ceviche">Ceviche</option>
+                            </select>
+                            <button id="btn-pedir" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded mt-4">Hacer Pedido</button>
+                            <div id="respuesta-cliente" class="mt-4"></div>
+                        </div>
+                        <div class="interactive-box">
+                            <h4 class="text-xl font-bold mb-3">2. Camarero (La API)</h4>
+                            <p class="text-sm text-neutral-500 mb-2">Recibe órdenes del Cliente y las traduce para la Cocina. Trae de vuelta el plato.</p>
+                            <div id="log-camarero"></div>
+                        </div>
+                        <div class="interactive-box">
+                            <h4 class="text-xl font-bold mb-3">3. Cocina (El Servidor)</h4>
+                            <p class="text-sm text-neutral-500 mb-2">Recibe peticiones de la API, prepara la data (el plato) y lo entrega.</p>
+                            <div id="log-cocina"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Simulador REST -->
+                <div id="tab-3" class="tab-content">
+                    <h3 class="text-3xl font-bold text-emerald-500 mb-6">Simulador de API REST (en Vivo)</h3>
+                    <p class="mb-4 text-neutral-400">Vamos a probar esto en el mundo real. Usaremos <code class="bg-neutral-700 px-2 py-1 rounded">jsonplaceholder.typicode.com</code>, una API pública y gratuita para pruebas.</p>
+                    <div class="interactive-box">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Petición -->
+                            <div>
+                                <h4 class="text-xl font-bold mb-4">Petición (Request)</h4>
+                                <div class="mb-4">
+                                    <label for="api-method" class="block text-sm font-medium text-neutral-300 mb-2">Método HTTP:</label>
+                                    <select id="api-method" class="w-full p-2 rounded bg-neutral-700 text-white border border-neutral-600">
+                                        <option value="GET">GET (Obtener datos)</option>
+                                        <option value="POST">POST (Crear datos)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="api-endpoint" class="block text-sm font-medium text-neutral-300 mb-2">Endpoint:</label>
+                                    <div class="flex">
+                                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-neutral-600 bg-neutral-800 text-neutral-400 text-sm">/</span>
+                                        <input type="text" id="api-endpoint" class="w-full p-2 rounded-r bg-neutral-700 text-white border border-neutral-600" value="posts/1">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="api-body" class="block text-sm font-medium text-neutral-300 mb-2">Cuerpo (Body) - Solo para POST</label>
+                                    <textarea id="api-body" rows="8" class="w-full p-2 rounded bg-neutral-700 text-white border border-neutral-600 font-mono text-sm" placeholder='{ "title": "mi post", "body": "hola mundo", "userId": 1 }' disabled></textarea>
+                                </div>
+                                <button id="btn-api-send" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded">Enviar Petición</button>
+                            </div>
+                            <!-- Respuesta -->
+                            <div>
+                                <h4 class="text-xl font-bold mb-4">Respuesta (Response)</h4>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-neutral-300 mb-2">Código de Estado:</label>
+                                    <div id="api-status" class="p-3 rounded bg-neutral-800 text-white font-bold">---</div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-neutral-300 mb-2">Respuesta JSON:</label>
+                                    <div class="code-block h-80 overflow-y-auto">
+                                        <pre><code id="api-response-json">{ "esperando petición..." }</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Solución Ficha 10 -->
+                <div id="tab-4" class="tab-content">
+                    <h3 class="text-3xl font-bold text-emerald-500 mb-6">Solución Guiada: Diseño de API de YachayConnect</h3>
+                    <p class="mb-6 text-neutral-400">Esta es la solución a la Ficha de Trabajo 10: el diseño de la API REST para nuestro recurso principal, <span class="highlight">Oportunidad</span>, basado en nuestro Diagrama de Clases.</p>
+                    
+                    <div class="space-y-6">
+                        <!-- GET All -->
+                        <div class="interactive-box">
+                            <h4 class="text-xl font-bold"><span class="text-green-400">GET</span> /api/v1/oportunidades</h4>
+                            <p class="text-neutral-400 mt-1">Obtiene una lista de todas las oportunidades.</p>
+                            <p class="font-bold text-white mt-3">Respuesta (200 OK):</p>
+                            <div class="code-block mt-2"><pre>[
+    { "id": 1, "titulo": "Practicante Frontend", "empresa": "TecCorp", "estado": "Abierta" },
+    { "id": 2, "titulo": "Analista de QA Jr", "empresa": "DataAnalytica", "estado": "Abierta" }
+]</pre></div>
+                        </div>
+                        
+                        <!-- GET One -->
+                        <div class="interactive-box">
+                            <h4 class="text-xl font-bold"><span class="text-green-400">GET</span> /api/v1/oportunidades/{id}</h4>
+                            <p class="text-neutral-400 mt-1">Obtiene los detalles de una oportunidad específica.</p>
+                            <p class="font-bold text-white mt-3">Respuesta (200 OK):</p>
+                            <div class="code-block mt-2"><pre>{
+    "id": 1,
+    "titulo": "Practicante Frontend",
+    "descripcion": "Buscamos un estudiante apasionado por la tecnología...",
+    "empresa": { "id": 10, "nombre": "TecCorp" },
+    "estado": "Abierta",
+    "etiquetas": ["JavaScript", "React", "CSS"]
+}</pre></div>
+                        </div>
+                        
+                        <!-- POST -->
+                        <div class="interactive-box">
+                            <h4 class="text-xl font-bold"><span class="text-yellow-400">POST</span> /api/v1/oportunidades</h4>
+                            <p class="text-neutral-400 mt-1">Crea una nueva oportunidad (usado por Reclutadores validados).</p>
+                            <p class="font-bold text-white mt-3">Cuerpo de Petición (Request Body):</p>
+                            <div class="code-block mt-2"><pre>{
+    "titulo": "Practicante Backend",
+    "descripcion": "Se requiere conocimiento en Java y Spring Boot.",
+    "tipoContrato": "Pasantia",
+    "etiquetas": ["Java", "Spring", "SQL"]
+}</pre></div>
+                            <p class="font-bold text-white mt-3">Respuesta (201 Created):</p>
+                            <div class="code-block mt-2"><pre>{
+    "id": 3,
+    "titulo": "Practicante Backend",
+    ...
+}</pre></div>
+                        </div>
+                        
+                        <!-- PUT -->
+                        <div class="interactive-box">
+                            <h4 class="text-xl font-bold"><span class="text-blue-400">PUT</span> /api/v1/oportunidades/{id}</h4>
+                            <p class="text-neutral-400 mt-1">Actualiza una oportunidad existente.</p>
+                             <p class="font-bold text-white mt-3">Cuerpo de Petición (Request Body):</p>
+                            <div class="code-block mt-2"><pre>{
+    "titulo": "Practicante Backend (Actualizado)",
+    "descripcion": "Se requiere conocimiento en Java y Spring Boot.",
+    "estado": "Cerrada",
+    "etiquetas": ["Java", "Spring", "SQL", "AWS"]
+}</pre></div>
+                        </div>
+
+                        <!-- DELETE -->
+                        <div class="interactive-box">
+                            <h4 class="text-xl font-bold"><span class="text-red-400">DELETE</span> /api/v1/oportunidades/{id}</h4>
+                            <p class="text-neutral-400 mt-1">Elimina (o archiva) una oportunidad.</p>
+                            <p class="font-bold text-white mt-3">Respuesta (204 No Content):</p>
+                            <div class="code-block mt-2"><pre>(Sin cuerpo de respuesta)</pre></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegación -->
+        <div class="flex justify-between mt-12">
+            <a href="sesion9.html" class="inline-block bg-neutral-700 hover:bg-neutral-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                &larr; Retroceder a Sesión 9 (Diseño UI/UX)
+            </a>
+            <a href="sesion11.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                Avanzar a Sesión 11 (Bases de Datos) &rarr;
+            </a>
+        </div>
+    </main>
+    
+    <footer class="text-center p-10 mt-12 bg-neutral-950 text-neutral-500 border-t border-neutral-800">
+        <p>Módulo Guía Interactivo de Diseño de Sistemas. El Plan Maestro está completo.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.getElementById('tabs');
+            const contents = document.getElementById('tab-contents');
+
+            tabs.addEventListener('click', (event) => {
+                const target = event.target;
+                if (!target.matches('.tab-button')) return;
+                const tabNumber = target.getAttribute('data-tab');
+                if (!tabNumber) return;
+
+                tabs.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+                target.classList.add('active');
+
+                contents.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                const newActiveContent = document.getElementById('tab-' + tabNumber);
+                if (newActiveContent) {
+                    newActiveContent.classList.add('active');
+                }
+            });
+
+            // *** Lógica del Camarero ***
+            const btnPedir = document.getElementById('btn-pedir');
+            const pedidoMenu = document.getElementById('pedido-menu');
+            const respuestaCliente = document.getElementById('respuesta-cliente');
+            const logCamarero = document.getElementById('log-camarero');
+            const logCocina = document.getElementById('log-cocina');
+
+            btnPedir.addEventListener('click', () => {
+                const pedido = pedidoMenu.value;
+                
+                // Limpiar logs
+                respuestaCliente.innerHTML = '';
+                logCamarero.innerHTML = '';
+                logCocina.innerHTML = '';
+
+                // 1. Cliente hace pedido
+                addLog(respuestaCliente, `Pidiendo: ${pedido}...`, 'request-msg', 0);
+
+                // 2. Camarero toma pedido
+                addLog(logCamarero, `Recibido: ${pedido}. Llevando a cocina...`, 'request-msg', 500);
+
+                // 3. Camarero pasa pedido a cocina
+                addLog(logCocina, `Petición (JSON): { "orden": "${pedido.replace(" ", "_").toLowerCase()}" }`, 'request-msg', 1500);
+
+                // 4. Cocina entrega a Camarero
+                addLog(logCocina, `Respuesta (JSON): { "plato": "${pedido}", "estado": "listo" }`, 'response-msg', 3500);
+
+                // 5. Camarero entrega a Cliente
+                addLog(logCamarero, `Plato listo: ${pedido}. Entregando...`, 'response-msg', 4500);
+                
+                // 6. Cliente recibe
+                addLog(respuestaCliente, `¡Aquí está tu ${pedido}!`, 'response-msg', 5500);
+            });
+
+            function addLog(container, text, aClass, delay) {
+                setTimeout(() => {
+                    const msg = document.createElement('div');
+                    msg.textContent = text;
+                    msg.className = `message ${aClass}`;
+                    container.appendChild(msg);
+                    // Forzar reflow para que la transición ocurra
+                    void msg.offsetWidth;
+                    msg.classList.add('show');
+                }, delay);
+            }
+
+            // *** Lógica del Simulador de API REST ***
+            const apiMethod = document.getElementById('api-method');
+            const apiEndpoint = document.getElementById('api-endpoint');
+            const apiBody = document.getElementById('api-body');
+            const btnApiSend = document.getElementById('btn-api-send');
+            const apiStatus = document.getElementById('api-status');
+            const apiResponseJson = document.getElementById('api-response-json');
+
+            apiMethod.addEventListener('change', () => {
+                if (apiMethod.value === 'POST') {
+                    apiBody.disabled = false;
+                    apiBody.classList.remove('bg-neutral-700');
+                    apiBody.classList.add('bg-neutral-600');
+                } else {
+                    apiBody.disabled = true;
+                    apiBody.classList.add('bg-neutral-700');
+                    apiBody.classList.remove('bg-neutral-600');
+                }
+            });
+
+            btnApiSend.addEventListener('click', async () => {
+                const method = apiMethod.value;
+                const endpoint = apiEndpoint.value;
+                const body = apiBody.value;
+                const url = `https://jsonplaceholder.typicode.com${endpoint}`;
+
+                // Mostrar estado de carga
+                apiStatus.textContent = 'Cargando...';
+                apiStatus.className = 'p-3 rounded bg-yellow-900 text-yellow-300 font-bold';
+                apiResponseJson.textContent = '{ "cargando": "..." }';
+                btnApiSend.disabled = true;
+                btnApiSend.textContent = 'Enviando...';
+
+                try {
+                    const options = {
+                        method: method,
+                        headers: { 'Content-Type': 'application/json' }
+                    };
+
+                    if (method === 'POST' && body) {
+                        options.body = body;
+                    }
+
+                    const response = await fetch(url, options);
+                    const data = await response.json();
+
+                    // Mostrar estado de éxito
+                    apiStatus.textContent = `${response.status} ${response.statusText}`;
+                    if (response.ok) {
+                        apiStatus.className = 'p-3 rounded bg-green-900 text-green-300 font-bold';
+                    } else {
+                         apiStatus.className = 'p-3 rounded bg-red-900 text-red-300 font-bold';
+                    }
+                    apiResponseJson.textContent = JSON.stringify(data, null, 2);
+
+                } catch (error) {
+                    // Mostrar estado de error
+                    apiStatus.textContent = 'Error de Red';
+                    apiStatus.className = 'p-3 rounded bg-red-900 text-red-300 font-bold';
+                    apiResponseJson.textContent = `{ "error": "${error.message}" }`;
+                } finally {
+                    btnApiSend.disabled = false;
+                    btnApiSend.textContent = 'Enviar Petición';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
