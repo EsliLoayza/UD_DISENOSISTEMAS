@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anexo: El Manifiesto de la API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .code-block {
+            font-family: 'SF Mono', 'Courier New', Courier, monospace;
+            background-color: #262626;
+            color: #f5f5f5;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.8;
+            border: 1px solid #444;
+        }
+        .class-name { color: #fbbf24; font-weight: bold; }
+        .comment { color: #999; }
+        .highlight { background-color: rgba(245, 158, 11, 0.2); padding: 2px 6px; border-radius: 4px; font-weight: bold; color: #fcd34d;}
+        h1, h2, h3 { color: white; }
+        h2 { border-bottom: 2px solid #f59e0b; padding-bottom: 8px; }
+        h3 { color: #fbbf24; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-amber-600 text-white shadow-lg">
+        <div class="container mx-auto px-6 py-10">
+            <h1 class="text-4xl md:text-5xl font-black text-neutral-900">El Manifiesto de la API</h1>
+            <p class="mt-2 text-xl text-neutral-800">Una Guía de Arquitectura sobre API y REST</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <div class="bg-neutral-900 p-8 rounded-xl shadow-lg border-l-8 border-amber-600">
+            <h2 class="text-3xl font-bold mb-6">1. El Misterio Revelado: ¿Qué es una API?</h2>
+            
+            <p class="text-lg text-neutral-300 mb-6">
+                Tu pregunta es la más importante de esta disciplina: "¿Es una API un fragmento de código? ¿Un recurso? ¿Un método?"
+            </p>
+            <p class="text-2xl font-bold text-white mb-6">
+                La respuesta es: <span class="highlight">Ninguna de las anteriores.</span>
+            </p>
+            <p class="text-lg text-neutral-300 mb-6">
+                Una API (Interfaz de Programación de Aplicaciones) no es algo tangible que puedas "tocar". Es un <strong class="text-amber-400">CONTRATO</strong>. Es un conjunto de reglas. Es un **MENÚ** que define cómo dos sistemas de software deben comunicarse.
+            </p>
+
+            <h3 class="text-2xl font-bold mb-4">La Analogía Definitiva: El Restaurante</h3>
+            <p class="text-neutral-300 mb-6">Imagina que YachayConnect es el restaurante más sofisticado del mundo:</p>
+            <ul class="list-disc list-inside space-y-4 mb-6 text-neutral-300">
+                <li><strong class="text-white">El Cliente (Tu App Móvil/Web):</strong> Eres el comensal. Tienes hambre (necesitas datos), pero no sabes cocinar y no tienes permitido entrar a la cocina.</li>
+                <li><strong class="text-white">El Servidor (El Backend):</strong> Es la cocina. Un sistema complejo con chefs (código), recetas (lógica) e ingredientes (base de datos).</li>
+                <li><strong class="text-white">La API (El Camarero):</strong> Es la **interfaz** entre tú y la cocina.</li>
+            </ul>
+
+            <p class="text-neutral-300 mb-6">
+                El camarero (la API) **no es la cocina (el código)** y **no es la comida (el recurso)**. El camarero es el **protocolo de comunicación**.
+            </p>
+
+            
+
+            <p class="text-neutral-300 mt-6">
+                El camarero te entrega un **Menú (El Diseño de la API)**. Este menú es el **contrato**. Te dice exactamente qué puedes pedir y cómo debes hacerlo. Tú (el cliente) no necesitas saber cómo el chef (el código) prepara el plato; solo necesitas saber cómo pedirlo.
+            </p>
+        </div>
+
+        <div class="bg-neutral-900 p-8 rounded-xl shadow-lg border-l-8 border-amber-600 mt-12">
+            <h2 class="text-3xl font-bold mb-6">2. El Estilo de Servicio: ¿Qué es una API REST?</h2>
+            <p class="text-lg text-neutral-300 mb-6">
+                REST (REpresentational State Transfer) es simplemente el "estilo de servicio de camarero" más popular y eficiente del mundo. Es un conjunto de reglas que todos los "camareros" (APIs) siguen para que cualquier "comensal" (app) sepa cómo pedir.
+            </p>
+            <p class="text-neutral-300 mb-6">Los 4 pilares de REST son:</p>
+
+            <h3 class="text-2xl font-bold mb-4">Pilar 1: Todo es un Recurso (Sustantivos)</h3>
+            <p class="text-neutral-300 mb-4">No pides "Quiero que el chef *cocine* lomo". Pides "Quiero *un* Lomo Saltado". El "Lomo Saltado" es el <strong class="text-amber-400">Recurso</strong>. En nuestro sistema, los recursos son: `Oportunidad`, `Estudiante`, `Postulacion`.</p>
+
+            <h3 class="text-2xl font-bold mb-4">Pilar 2: Usamos URLs para identificar Recursos</h3>
+            <p class="text-neutral-300 mb-4">Cada recurso tiene una dirección única y predecible.</p>
+            <div class="code-block"><pre>
+/oportunidades          (Se refiere a TODAS las oportunidades)
+/oportunidades/123      (Se refiere a la oportunidad ÚNICA con ID 123)
+            </pre></div>
+
+            <h3 class="text-2xl font-bold mb-4 mt-6">Pilar 3: Usamos Verbos HTTP para actuar sobre los Recursos</h3>
+            <p class="text-neutral-300 mb-4">Usamos los métodos estándar del protocolo HTTP como los verbos de nuestra oración:</p>
+            <div class="code-block"><pre>
+<span class="comment">// Quiero LEER la oportunidad 123</span>
+<span class="relation-name">GET</span> /oportunidades/123
+
+<span class="comment">// Quiero CREAR una nueva oportunidad</span>
+<span class="relation-name">POST</span> /oportunidades
+
+<span class="comment">// Quiero ACTUALIZAR la oportunidad 123</span>
+<span class="relation-name">PUT</span> /oportunidades/123
+
+<span class="comment">// Quiero BORRAR la oportunidad 123</span>
+<span class="relation-name">DELETE</span> /oportunidades/123
+            </pre></div>
+
+            <h3 class="text-2xl font-bold mb-4 mt-6">Pilar 4: Hablamos en un Idioma Común (JSON)</h3>
+            <p class="text-neutral-300 mb-4">El camarero y el cliente deben hablar el mismo idioma. En la web moderna, ese idioma es **JSON** (JavaScript Object Notation). Es la forma en que estructuramos los datos que enviamos y recibimos.</p>
+        </div>
+
+        <div class="bg-neutral-900 p-8 rounded-xl shadow-lg border-l-8 border-amber-600 mt-12">
+            <h2 class="text-3xl font-bold mb-6">3. Caso de Estudio: La API de Getty Images</h2>
+            <p class="text-lg text-neutral-300 mb-6">
+                Tu solicitud de la API de Getty Images es un ejemplo magistral. Getty Images tiene una "cocina" (un servidor con millones de fotos) que vale una fortuna. No permiten que nadie entre a su cocina.
+            </p>
+            <p class="text-neutral-300 mb-6">
+                En lugar de eso, ofrecen una **API**. Le dan al mundo un "menú" que dice: "Puedes *pedirme* fotos, pero debes seguir estas reglas y pagarme por ello".
+            </p>
+            <p class="text-neutral-300 mb-6">
+                Un desarrollador de un blog de noticias no descarga millones de fotos. Simplemente "llama al camarero" de Getty Images.
+            </p>
+            <div class="flex justify-center my-8">
+                
+            </div>
+            
+            <p class="text-neutral-300 mb-4">Cuando un desarrollador quiere buscar fotos de "perros", no entra a la base de datos de Getty. Escribe una petición RESTful, como esta:</p>
+            <div class="code-block"><pre>
+<span class="relation-name">GET</span> https://api.gettyimages.com/v3/search/images?phrase=perros
+<span class="comment">// (Y envía una clave de API para autenticarse)</span>
+            </pre></div>
+            <p class="text-neutral-300 mb-4 mt-4">
+                La API de Getty (el camarero) recibe esto, va a su cocina, busca las fotos y devuelve un JSON con las URLs de las imágenes:
+            </p>
+            <div class="code-block"><pre>
+{
+  "images": [
+    { "id": "91761619", "display_sizes": [...], "title": "Perro feliz corriendo..." },
+    { "id": "91761620", "display_sizes": [...], "title": "Cachorro durmiendo..." }
+  ]
+}
+            </pre></div>
+        </div>
+
+        <div class="bg-neutral-900 p-8 rounded-xl shadow-lg border-l-8 border-amber-600 mt-12">
+            <h2 class="text-3xl font-bold mb-6">4. Ejemplo Práctico: El Formulario de Suscripción</h2>
+            <p class="text-lg text-neutral-300 mb-6">
+                Aterricemos esto en YachayConnect. Queremos un formulario para suscribirse a un boletín. Este es el flujo de trabajo completo, dividido en los roles del arquitecto y los programadores.
+            </p>
+            
+
+            <h3 class="text-2xl font-bold mb-4 mt-6">Paso 1: El Arquitecto (TU TRABAJO - Semana 10) diseña el "Menú"</h3>
+            <p class="text-neutral-300 mb-4">
+                Tú, como arquitecto, defines el <strong class="text-amber-400">contrato</strong>. Decides que debe existir una forma de *crear* un nuevo suscriptor. Tu trabajo es escribir esto en un documento:
+            </p>
+            <div class="code-block"><pre>
+<span class="class-name">Operación:</span> Crear un nuevo suscriptor
+<span class="class-name">Recurso:</span> /suscriptores
+<span class="class-name">Método HTTP:</span> POST
+<span class="class-name">Endpoint (URL):</span> /api/v1/suscriptores
+
+<span class="class-name">Petición JSON (Lo que el cliente envía):</span>
+{
+  "email": "nuevo.usuario@correo.com",
+  "nombre": "Juan"
+}
+
+<span class="class-name">Respuesta JSON (Lo que el servidor devuelve):</span>
+{
+  "id": "sub_xyz789",
+  "email": "nuevo.usuario@correo.com",
+  "fechaSuscripcion": "2025-11-04T21:30:00Z"
+}
+            </pre></div>
+            <p class="text-xl text-white font-bold my-6">
+                ¡En este punto, tu trabajo de la Semana 10 está HECHO! Has diseñado la comunicación.
+            </p>
+
+            <h3 class="text-2xl font-bold mb-4 mt-6">Paso 2: El Programador Backend (Trabajo Futuro) construye la "Cocina"</h3>
+            <p class="text-neutral-300 mb-4">
+                Un programador de backend toma tu "menú" (tu diseño) y construye la implementación tangible. Escribe el **código** (en Python, Java, Node.js) que:
+            </p>
+            <ol class="list-decimal list-inside space-y-2 mb-4 text-neutral-300">
+                <li>Escucha peticiones `POST` en `/api/v1/suscriptores`.</li>
+                <li>Toma el JSON de la petición.</li>
+                <li>Valida el email.</li>
+                <li>Escribe el email en la base de datos (`INSERT INTO...`).</li>
+                <li>Construye y devuelve el JSON de respuesta que tú diseñaste.</li>
+            </ol>
+            <p class="text-neutral-300 mb-4 font-bold">Este código ES la implementación de la API.</p>
+
+            <h3 class="text-2xl font-bold mb-4 mt-6">Paso 3: El Programador Frontend (Trabajo Futuro) conecta el "Formulario"</h3>
+            <p class="text-neutral-300 mb-4">
+                Un programador frontend construye la parte visual (HTML) y la conecta usando JavaScript (el "Cliente").
+            </p>
+            <div class="code-block"><pre>
+<span class="comment">// HTML del Formulario</span>
+&lt;input type="email" id="email-input" placeholder="Tu correo"&gt;
+&lt;button id="btn-suscribir"&gt;Suscribirse&lt;/button&gt;
+
+<span class="comment">// JavaScript (El Cliente que "Llama al Camarero")</span>
+document.getElementById("btn-suscribir").addEventListener("click", () => {
+  
+  <span class="comment">// 1. Prepara el pedido según el "menú" (tu diseño)</span>
+  let datos = {
+    email: document.getElementById("email-input").value,
+    nombre: "Visitante"
+  };
+
+  <span class="comment">// 2. Llama al camarero (la API)</span>
+  fetch('<span class="relation-name">/api/v1/suscriptores</span>', {
+    method: '<span class="relation-name">POST</span>',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(datos)
+  })
+  .then(respuesta => respuesta.json())
+  .then(data => {
+    alert("¡Éxito! Tu ID es: " + data.id); <span class="comment">// 5. El cliente está feliz</span>
+  });
+});
+            </pre></div>
+        </div>
+
+        <div class="bg-neutral-900 p-8 rounded-xl shadow-lg border-l-8 border-amber-600 mt-12">
+            <h2 class="text-3xl font-bold mb-6">Conclusión: Tu Tarea Exacta</h2>
+            <p class="text-lg text-neutral-300 mb-6">
+                Como ves, la API no es el formulario ni el código del servidor. Es el **contrato** que los une.
+            </p>
+            <p class="text-xl text-white font-bold">
+                Tu trabajo en la Semana 10 es ser el arquitecto del <span class="highlight">Paso 1</span>:
+            </p>
+            <ol class="list-decimal list-inside space-y-2 mt-4 text-xl text-neutral-300">
+                <li>Decidir la Arquitectura (Monolito vs. Microservicios).</li>
+                <li>Diseñar el Contrato API para el recurso `Oportunidad` (los 5 endpoints).</li>
+            </ol>
+        </div>
+    </main>
+    
+    <footer class="text-center p-10 mt-12 bg-neutral-950 text-neutral-500 border-t border-neutral-800">
+        <p>Anexo de Arquitectura de Software. El diseño de la comunicación está completo.</p>
+    </footer>
+
+</body>
+</html>
